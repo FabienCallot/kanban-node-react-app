@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "start": "node-dev server/index.js"
+  },
+  "name": "kanban-node-react-app",
+  "version": "1.0.0",
+  "description": "kanban apiREST and react frontend",
+  "main": "index.js",
+  "repository": "git@github.com:FabienCallot/kanban-node-react-app.git",
+  "author": "FabienCallot <fab.callot@gmail.com>",
+  "license": "MIT"
+}
