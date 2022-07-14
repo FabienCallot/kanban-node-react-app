@@ -4,7 +4,7 @@
   },
   "scripts": {
     "start": "node-dev server/index.js",
-    "build": "cd client && yarn && yarn run build"
+    "build": "cd client && yarn && yarn build"
   },
   "name": "kanban-node-react-app",
   "version": "1.0.0",
