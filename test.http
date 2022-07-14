@@ -1,0 +1,97 @@
+### On peut définir des variables de cette façon
+@endpoint = http://localhost:3018
+
+################################
+###          LISTES           ###
+################################
+
+### récupération d'une listes
+GET {{ endpoint }}/route404
+
+### récupération des listes 
+### (utiliser lesd variables avec des {{ }}
+GET {{ endpoint }}/lists
+
+### récupération d'une liste
+GET {{ endpoint }}/lists/1
+
+### ajouter une liste en erreur
+POST {{ endpoint }}/lists
+content-type: application/x-www-form-urlencoded
+
+position=1
+
+### ajouter une liste
+POST {{ endpoint }}/lists
+content-type: application/x-www-form-urlencoded
+
+name=liste à ajouter&position=1
+
+### modifier une liste
+PATCH {{ endpoint }}/lists/1
+content-type: application/x-www-form-urlencoded
+
+name=nouveau nom pour la liste1
+
+### supprimer une liste
+DELETE {{ endpoint }}/lists/7
+
+################################
+###          CARDS           ###
+################################
+
+
+### récupération des cartes 
+GET {{ endpoint }}/cards
+
+### récupération des cartes d'une liste
+GET {{ endpoint }}/lists/1/cards
+
+### récupération d'une carte
+GET {{ endpoint }}/cards/1
+
+### ajouter une carte
+POST {{ endpoint }}/cards
+content-type: application/x-www-form-urlencoded
+
+description=liste à ajouter&position=1&list_id=1
+
+### modifier une carte
+PATCH {{ endpoint }}/cards/1
+content-type: application/x-www-form-urlencoded
+
+description=nouvelle description pour la carte 1
+
+### supprimer une carte
+DELETE {{ endpoint }}/cards/7
+
+### ajouter un tag a une carte
+POST {{ endpoint }}/cards/1/tag
+content-type: application/x-www-form-urlencoded
+
+tag_id=3
+
+################################
+###          TAGS           ###
+################################
+
+### récupération des labels 
+GET {{ endpoint }}/tags
+
+### récupération d'un label
+GET {{ endpoint }}/tags/1
+
+### ajouter un label
+POST {{ endpoint }}/tags
+content-type: application/x-www-form-urlencoded
+
+name=nouveau label
+
+### modifier un label
+PATCH {{ endpoint }}/tags/1
+content-type: application/x-www-form-urlencoded
+
+name=nouveau pour pour le label 1
+
+### supprimer un label
+DELETE {{ endpoint }}/tags/4

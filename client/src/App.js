@@ -7,16 +7,16 @@ function App() {
   console.log(data);
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch("/cards")
       .then((res) => res.json())
-      .then((data) => setData(data.message));
+      .then((data) => setData(data));
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
+        <p>{!data ? "Loading..." : data.map((datas) => datas.id)}</p>
       </header>
     </div>
   );
