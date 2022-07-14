@@ -3,7 +3,7 @@
     "express": "^4.18.1"
   },
   "scripts": {
-    "start": "node-dev server/index.js",
+    "start": "node server/index.js",
     "build": "cd client && yarn && yarn build"
   },
   "name": "kanban-node-react-app",
