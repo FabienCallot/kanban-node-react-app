@@ -1,0 +1,4 @@
+Liste (id, nom, position)
+Carte (id, description, position, couleur, #Liste(id))
+Label (id, nom, couleur)
+Carte_a_Label (id, #Carte(id), #Label(id))
