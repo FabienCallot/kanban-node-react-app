@@ -3,7 +3,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     define: {
         underscored: true
     },
-    host: process.env.PSQL_HOST || "localhost",
+    host: "127.0.0.1",
     dialect: "postgres",
     pool: {
       max: 100,
