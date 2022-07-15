@@ -1,5 +1,5 @@
 import React from "react";
-import logo from './logo.svg';
+import {getAllLists} from '../../Requests/getAllLists'
 import './App.css';
 
 function App() {
@@ -7,15 +7,16 @@ function App() {
   console.log(data);
 
   React.useEffect(() => {
-    fetch("/cards")
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    // fetch("/cards")
+    //   .then((res) => res.json())
+    //   .then((data) => setData(data));
+    getAllLists(setData)
+     
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="app">
+      <header className="app-header">
         <p>{!data ? "Loading..." : data.map((datas) => datas.id)}</p>
       </header>
     </div>
