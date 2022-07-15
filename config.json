@@ -1,0 +1,5 @@
+{
+  "adapter": "sequelize",
+  "dialect": "postgres",
+  "url": "postgres://localhost/my_addon_database"
+}
