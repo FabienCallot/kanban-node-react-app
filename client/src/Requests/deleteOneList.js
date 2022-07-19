@@ -1,4 +1,4 @@
-const deleteOneList = async (e, id) => {
+export async function deleteOneList  (e, id)  {
   try {
     const response = await fetch(
       `https://kanban-node-react-app.herokuapp.com/lists/${id}`,

@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 import { getAllLists } from '../../Requests/getAllLists';
 import { createOneList } from '../../Requests/createOneList';
-import handleDeleteList from '../../Requests/deleteOneList';
-import { getOnelist } from '../../Requests/getOnelist';
+import { getAllCards } from '../../Requests/getAllCards';
+import { deleteOneList } from '../../Requests/deleteOneList';
+import { updateOneList } from '../../Requests/updateOneList';
+//import { getOnelist } from '../../Requests/getOnelist';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState(null);
+  const [listsData, setListsData] = useState(null);
+  const [cardsData, setCardsData] = useState(null);
   const [listName, setListName] = useState('');
-  console.log(listName);
-  console.log(data);
 
   useEffect(() => {
-    getAllLists(setData);
-    //getAllCards(setData)
+    getAllLists(setListsData);
+    getAllCards(setCardsData);
   }, []);
-
+  console.log(cardsData);
   const handleSetListName = (event) => {
     setListName(event.target.value);
   };
@@ -24,36 +25,73 @@ function App() {
     createOneList(event, listName);
 
     setTimeout(() => {
-      getAllLists(setData);
+      getAllLists(setListsData);
     }, 200);
   };
 
   const handleDelete = (e, id) => {
-    handleDeleteList(e, id);
+    deleteOneList(e, id);
     setTimeout(() => {
-      getAllLists(setData);
+      getAllLists(setListsData);
+    }, 200);
+  };
+
+  const handleUpdate = (event, id, listName) => {
+    event.preventDefault();
+    updateOneList(id, listName);
+
+    setTimeout(() => {
+      getAllLists(setListsData);
     }, 200);
   };
 
   return (
     <div className="app">
       <header className="app-header">
-        {!data
+        {!listsData
           ? 'Loading...'
-          : data
+          : listsData
               .sort((a, b) => (a.id > b.id ? 1 : -1))
               .map((list) => (
-                <div key={list.id} style={{ margin: '30px' }}>
+                <div
+                  key={list.id}
+                  style={{
+                    margin: '30px',
+                    border: 'solid 1px black',
+                    padding: '1rem',
+                  }}
+                >
                   <div>
                     <p>{list.name}</p>
                     <button
                       onClick={(e) => {
-                        handleDelete(e, list.id);
+                        handleDelete(e, list.id, list.name);
                       }}
                     >
                       delete
                     </button>
+                    <form
+                      onSubmit={(e) => {
+                        handleUpdate(e, list.id, listName);
+                      }}
+                    >
+                      <label>
+                        Nom :
+                        <input
+                          id="new-list-name"
+                          type="text"
+                          name={'name'}
+                          onChange={handleSetListName}
+                        />
+                      </label>
+                      <input type="submit" value="Envoyer" />
+                    </form>
                   </div>
+                  {cardsData.map((card) =>
+                    list.id === card.list_id ? (
+                      <p key={card.id}>{card.description}</p>
+                    ) : null
+                  )}
                 </div>
               ))}
 
