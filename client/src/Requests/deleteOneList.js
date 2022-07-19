@@ -16,5 +16,3 @@ export async function deleteOneList  (e, id)  {
     console.error(error);
   }
 };
-
-export default deleteOneList;

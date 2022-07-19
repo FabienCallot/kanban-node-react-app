@@ -12,7 +12,5 @@ export async function createOneList(event, name) {
     }
   );
 
-  const newList = await response.json();
-  console.log(newList);
-  return;
+  return response;
 }

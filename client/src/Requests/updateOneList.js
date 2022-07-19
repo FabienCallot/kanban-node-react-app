@@ -3,7 +3,6 @@ export async function updateOneList( id, name) {
   
   const data = new FormData();
   data.append('name', name);
-  console.log(data.value);
 
     try {
         const response = await fetch(`https://kanban-node-react-app.herokuapp.com/lists/${id}`, {
