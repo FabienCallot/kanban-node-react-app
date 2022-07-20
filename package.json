@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@fontsource/roboto": "^4.5.7",
-    "@mui/material": "^5.9.0",
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",

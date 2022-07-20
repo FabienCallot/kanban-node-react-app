@@ -17,6 +17,7 @@ function App() {
   const [listName, setListName] = useState('');
   const [cardsData, setCardsData] = useState(null);
   const [cardName, setCardName] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [tagsData, setTagsData] = useState(null);
   const [tagName, setTagName] = useState('');
   const [tagColor, setTagColor] = useState('');
@@ -26,8 +27,6 @@ function App() {
     getAllCards(setCardsData);
     getAllTags(setTagsData);
   }, []);
-
-  console.log(tagsData);
 
   /**
    * The function takes an event as an argument, and then sets the state of the listName variable to the
