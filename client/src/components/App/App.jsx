@@ -6,6 +6,7 @@ import { deleteOneList } from '../../Requests/deleteOneList';
 import { updateOneList } from '../../Requests/updateOneList';
 import { createOneCard } from '../../Requests/createOneCard';
 import { updateOneCard } from '../../Requests/updateOneCard';
+import { deleteOneCard } from '../../Requests/deleteOneCard';
 import './App.css';
 
 function App() {
@@ -60,10 +61,17 @@ function App() {
   /**
    * It deletes a list and then updates the list of lists.
    */
-  const handleDelete = (e, id) => {
+  const handleDeleteList = (e, id) => {
     deleteOneList(e, id);
     setTimeout(() => {
       getAllLists(setListsData);
+    }, 200);
+  };
+
+  const handleDeleteCard = (e, id) => {
+    deleteOneCard(e, id);
+    setTimeout(() => {
+      getAllCards(setCardsData);
     }, 200);
   };
 
@@ -106,13 +114,6 @@ function App() {
               >
                 <div>
                   <p>{list.name}</p>
-                  <button
-                    onClick={(e) => {
-                      handleDelete(e, list.id, list.name);
-                    }}
-                  >
-                    delete
-                  </button>
                   <form
                     onSubmit={(e) => {
                       handleUpdateListName(e, list.id, listName);
@@ -129,6 +130,13 @@ function App() {
                     </label>
                     <input type="submit" value="Envoyer" />
                   </form>
+                  <button
+                    onClick={(e) => {
+                      handleDeleteList(e, list.id, list.name);
+                    }}
+                  >
+                    delete list
+                  </button>
                 </div>
                 <div>
                   {!cardsData
@@ -156,6 +164,13 @@ function App() {
                                   </label>
                                   <input type="submit" value="Envoyer" />
                                 </form>
+                                <button
+                                  onClick={(e) => {
+                                    handleDeleteCard(e, card.id);
+                                  }}
+                                >
+                                  delete card
+                                </button>
                               </div>
                             )
                         )}
