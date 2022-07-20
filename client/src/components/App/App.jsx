@@ -5,8 +5,7 @@ import { getAllCards } from '../../Requests/getAllCards';
 import { deleteOneList } from '../../Requests/deleteOneList';
 import { updateOneList } from '../../Requests/updateOneList';
 import { createOneCard } from '../../Requests/createOneCard';
-
-//import { getOnelist } from '../../Requests/getOnelist';
+import { updateOneCard } from '../../Requests/updateOneCard';
 import './App.css';
 
 function App() {
@@ -81,14 +80,14 @@ function App() {
     }, 200);
   };
 
-  // const handleUpdateCardName = (event, id, listName) => {
-  //   event.preventDefault();
-  //   updateOneCard(id, listName);
+  const handleUpdateCardName = (event, id, cardName) => {
+    event.preventDefault();
+    updateOneCard(id, cardName);
 
-  //   setTimeout(() => {
-  //     getAllLists(setListsData);
-  //   }, 200);
-  // };
+    setTimeout(() => {
+      getAllCards(setCardsData);
+    }, 200);
+  };
 
   return (
     <div className="app">
@@ -120,7 +119,7 @@ function App() {
                     }}
                   >
                     <label>
-                      Nom list:
+                      update list:
                       <input
                         id="new-list-name"
                         type="text"
@@ -132,18 +131,41 @@ function App() {
                   </form>
                 </div>
                 <div>
-                  {cardsData.map((card) =>
-                    list.id === card.list_id ? (
-                      <p key={card.id}>{card.description}</p>
-                    ) : null
-                  )}
+                  {!cardsData
+                    ? 'Loading...'
+                    : cardsData
+                        .sort((a, b) => (a.id > b.id ? 1 : -1))
+                        .map(
+                          (card) =>
+                            list.id === card.list_id && (
+                              <div key={card.id}>
+                                <p>{card.description}</p>
+                                <form
+                                  onSubmit={(e) => {
+                                    handleUpdateCardName(e, card.id, cardName);
+                                  }}
+                                >
+                                  <label>
+                                    update card:
+                                    <input
+                                      id="new-list-name"
+                                      type="text"
+                                      name={'name'}
+                                      onChange={handleCardName}
+                                    />
+                                  </label>
+                                  <input type="submit" value="Envoyer" />
+                                </form>
+                              </div>
+                            )
+                        )}
                   <form
                     onSubmit={(e) => {
                       handleSubmitCard(e, list.id);
                     }}
                   >
                     <label>
-                      Nom card :
+                      New card :
                       <input
                         id="new-card-name"
                         type="text"
@@ -156,7 +178,6 @@ function App() {
                 </div>
               </div>
             ))}
-
       <form onSubmit={handleSubmitList}>
         <label>
           New List:
