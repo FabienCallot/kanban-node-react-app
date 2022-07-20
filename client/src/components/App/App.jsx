@@ -8,6 +8,7 @@ import { createOneCard } from '../../Requests/createOneCard';
 import { updateOneCard } from '../../Requests/updateOneCard';
 import { deleteOneCard } from '../../Requests/deleteOneCard';
 import { getAllTags } from '../../Requests/getAllTags';
+import { createOneTag } from '../../Requests/createOneTag';
 
 import './App.css';
 
@@ -17,13 +18,17 @@ function App() {
   const [cardsData, setCardsData] = useState(null);
   const [cardName, setCardName] = useState('');
   const [tagsData, setTagsData] = useState(null);
+  const [tagName, setTagName] = useState('');
+  const [tagColor, setTagColor] = useState('');
 
   useEffect(() => {
     getAllLists(setListsData);
     getAllCards(setCardsData);
     getAllTags(setTagsData);
   }, []);
+
   console.log(tagsData);
+
   /**
    * The function takes an event as an argument, and then sets the state of the listName variable to the
    * value of the event
@@ -37,6 +42,21 @@ function App() {
    */
   const handleCardName = (event) => {
     setCardName(event.target.value);
+  };
+
+  /**
+   * The function takes an event as an argument, and then sets the state of the tagName variable to the
+   * value of the event
+   */
+  const handleTagName = (event) => {
+    setTagName(event.target.value);
+  };
+
+  /**
+   * It sets the tag color to the value of the event target.
+   */
+  const handleTagColor = (event) => {
+    setTagColor(event.target.value);
   };
 
   /**
@@ -59,6 +79,17 @@ function App() {
 
     setTimeout(() => {
       getAllCards(setCardsData);
+    }, 200);
+  };
+
+  /**
+   * It creates a new tag and then gets all the tags.
+   */
+  const handleSubmitTag = (event) => {
+    createOneTag(event, tagName, tagColor);
+
+    setTimeout(() => {
+      getAllTags(setTagsData);
     }, 200);
   };
 
@@ -205,12 +236,19 @@ function App() {
       <form onSubmit={handleSubmitList}>
         <label>
           New List:
-          <input
-            id="new-list-name"
-            type="text"
-            name={'name'}
-            onChange={handleListName}
-          />
+          <input type="text" name={'name'} onChange={handleListName} />
+        </label>
+        <input type="submit" value="Envoyer" />
+      </form>
+      {/* *************** */}
+      <form onSubmit={handleSubmitTag}>
+        <label>
+          New Tag name:
+          <input type="text" name={'name'} onChange={handleTagName} />
+        </label>
+        <label>
+          New Tag color:
+          <input type="text" name={'color'} onChange={handleTagColor} />
         </label>
         <input type="submit" value="Envoyer" />
       </form>
