@@ -7,6 +7,8 @@ import { updateOneList } from '../../Requests/updateOneList';
 import { createOneCard } from '../../Requests/createOneCard';
 import { updateOneCard } from '../../Requests/updateOneCard';
 import { deleteOneCard } from '../../Requests/deleteOneCard';
+import { getAllTags } from '../../Requests/getAllTags';
+
 import './App.css';
 
 function App() {
@@ -14,12 +16,14 @@ function App() {
   const [listName, setListName] = useState('');
   const [cardsData, setCardsData] = useState(null);
   const [cardName, setCardName] = useState('');
+  const [tagsData, setTagsData] = useState(null);
 
   useEffect(() => {
     getAllLists(setListsData);
     getAllCards(setCardsData);
+    getAllTags(setTagsData);
   }, []);
-
+  console.log(tagsData);
   /**
    * The function takes an event as an argument, and then sets the state of the listName variable to the
    * value of the event
@@ -68,6 +72,9 @@ function App() {
     }, 200);
   };
 
+  /**
+   * It deletes a card from the database and then refreshes the page to show the updated list of cards.
+   */
   const handleDeleteCard = (e, id) => {
     deleteOneCard(e, id);
     setTimeout(() => {
@@ -88,6 +95,10 @@ function App() {
     }, 200);
   };
 
+  /**
+   * It takes an event, an id, and a cardName, and then it updates the card with the given id and
+   * cardName, and then it gets all the cards and sets the cardsData to the cards that it gets
+   */
   const handleUpdateCardName = (event, id, cardName) => {
     event.preventDefault();
     updateOneCard(id, cardName);
@@ -156,7 +167,6 @@ function App() {
                                   <label>
                                     update card:
                                     <input
-                                      id="new-list-name"
                                       type="text"
                                       name={'name'}
                                       onChange={handleCardName}
@@ -182,7 +192,6 @@ function App() {
                     <label>
                       New card :
                       <input
-                        id="new-card-name"
                         type="text"
                         name={'name'}
                         onChange={handleCardName}
