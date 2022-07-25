@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      advent: ['Advent Pro', 'sans-serif'],
       akaya: ['Akaya Telivigala', 'sans-serif'],
+      advent: ['Advent Pro', 'sans-serif'],
     },
   },
   plugins: [],
