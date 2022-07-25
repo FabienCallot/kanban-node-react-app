@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { getAllLists } from '../Requests/getAllLists';
 import { createOneList } from '../Requests/createOneList';
@@ -24,7 +25,6 @@ function App() {
   const [tagColor, setTagColor] = useState('');
 
   const [height, setHeight] = useState(0);
-  console.log(height);
   useEffect(() => {
     currentHeight(setHeight);
     getAllCards(setCardsData);
@@ -143,7 +143,7 @@ function App() {
 
   return (
     <div className="text-[#FFFFFF] font-advent">
-      {height < 10 ? <Header /> : <Header className=" opacity-25" />}
+      {height < 20 ? <Header /> : <Header className=" opacity-0" />}
 
       <Home />
       {/* {!listsData

@@ -5,9 +5,9 @@ import List from './List';
 import { getAllLists } from '../Requests/getAllLists';
 
 const Home = () => {
-  // lists state
-  const [listsData, setListsData] = useState([]);
-  const [listName, setListName] = useState('');
+  // Lists states
+  const [listsData, setListsData] = useState();
+
   useEffect(() => {
     getAllLists(setListsData);
   }, []);
@@ -26,12 +26,13 @@ const Home = () => {
       </div>
 
       <div className="home-lists flex">
-        {!listsData
-          ? 'loading...'
-          : listsData
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map((list) => <List key={list.id} listName={list.name} />)}
-        <List />
+        {/* map on data for display all lists and pass the list.id prop into List for map on it to display all tasks by ID  */}
+        {listsData &&
+          listsData
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((list) => (
+              <List key={list.id} listName={list.name} listId={list.id} />
+            ))}
       </div>
     </div>
   );
