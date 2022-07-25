@@ -1,9 +1,18 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import Button from './Button';
 import List from './List';
+import { getAllLists } from '../Requests/getAllLists';
 
 const Home = () => {
+  // lists state
+  const [listsData, setListsData] = useState([]);
+  const [listName, setListName] = useState('');
+  //console.log(listsData);
+  useEffect(() => {
+    getAllLists(setListsData);
+  }, []);
+
   return (
     <div className="home p-8">
       <div className="home-header flex items-baseline">
@@ -18,7 +27,11 @@ const Home = () => {
       </div>
 
       <div className="home-lists flex">
-        <List />
+        {!listsData
+          ? 'loading...'
+          : listsData
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map((list) => <List key={list.id} listName={list.name} />)}
         <List />
       </div>
     </div>

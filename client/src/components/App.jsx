@@ -142,7 +142,7 @@ function App() {
     <div className="text-[#FFFFFF] font-advent">
       <Header />
       <Home />
-      {!listsData
+      {/* {!listsData
         ? 'Loading...'
         : listsData
             .sort((a, b) => (a.id > b.id ? 1 : -1))
@@ -251,7 +251,7 @@ function App() {
           <input type="text" name={'color'} onChange={handleTagColor} />
         </label>
         <input type="submit" value="Envoyer" />
-      </form>
+      </form> */}
     </div>
   );
 }
