@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from 'react';
-import { BsPlusLg } from 'react-icons/bs';
-import Button from './Button';
 import List from './List';
 import { getAllLists } from '../Requests/getAllLists';
+import Modal from './Modal';
 
 const Home = () => {
   // Lists states
@@ -14,18 +13,12 @@ const Home = () => {
 
   return (
     <div className="home p-4 pt-20 h-[1000px]">
-      <div className="home-header flex items-baseline">
+      <div className="home-header flex ">
         <h2 className="text-3xl mt-20 mb-10">RoadMap</h2>
-        <Button
-          className="list-header-button mt-20 mb-10 ml-4"
-          text={<BsPlusLg className="mx-auto" />}
-          clickEvent={() => {
-            return;
-          }}
-        />
+        <Modal title={'Create new list'} />
       </div>
 
-      <div className="home-lists flex">
+      <div className="home-lists flex items-start">
         {/* map on data for display all lists and pass the list.id prop into List for map on it to display all tasks by ID  */}
         {listsData &&
           listsData
