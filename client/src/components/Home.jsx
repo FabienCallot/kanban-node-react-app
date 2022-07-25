@@ -8,7 +8,6 @@ const Home = () => {
       <div className="home-lists flex">
         <List />
         <List />
-      </div>
     </div>
   );
 };
