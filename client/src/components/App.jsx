@@ -65,13 +65,13 @@ function App() {
    * It creates a new list, then after 200 milliseconds, it gets all the lists and sets the state of
    * the lists data
    */
-  const handleSubmitList = (event) => {
-    createOneList(event, listName);
+  // const handleSubmitList = (event) => {
+  //   createOneList(event, listName);
 
-    setTimeout(() => {
-      getAllLists(setListsData);
-    }, 200);
-  };
+  //   setTimeout(() => {
+  //     getAllLists(setListsData);
+  //   }, 200);
+  // };
 
   /**
    * The function creates a new card, then after 200 milliseconds, it updates the list data
