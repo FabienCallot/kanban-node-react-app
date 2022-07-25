@@ -11,6 +11,7 @@ import { getAllTags } from '../Requests/getAllTags';
 import { createOneTag } from '../Requests/createOneTag';
 import Home from './Home';
 import Header from './Header';
+import currentHeight from '../utils/currentHeight';
 
 function App() {
   const [listsData, setListsData] = useState(null);
@@ -22,8 +23,10 @@ function App() {
   const [tagName, setTagName] = useState('');
   const [tagColor, setTagColor] = useState('');
 
+  const [height, setHeight] = useState(0);
+  console.log(height);
   useEffect(() => {
-    getAllLists(setListsData);
+    currentHeight(setHeight);
     getAllCards(setCardsData);
     getAllTags(setTagsData);
   }, []);
@@ -140,7 +143,8 @@ function App() {
 
   return (
     <div className="text-[#FFFFFF] font-advent">
-      <Header />
+      {height < 10 ? <Header /> : <Header className=" opacity-25" />}
+
       <Home />
       {/* {!listsData
         ? 'Loading...'

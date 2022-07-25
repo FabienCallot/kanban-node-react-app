@@ -8,13 +8,12 @@ const Home = () => {
   // lists state
   const [listsData, setListsData] = useState([]);
   const [listName, setListName] = useState('');
-  //console.log(listsData);
   useEffect(() => {
     getAllLists(setListsData);
   }, []);
 
   return (
-    <div className="home p-8">
+    <div className="home p-4 pt-20 h-[1000px]">
       <div className="home-header flex items-baseline">
         <h2 className="text-3xl mt-20 mb-10">RoadMap</h2>
         <Button
