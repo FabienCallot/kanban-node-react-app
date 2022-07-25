@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getAllLists } from '../../Requests/getAllLists';
-import { createOneList } from '../../Requests/createOneList';
-import { getAllCards } from '../../Requests/getAllCards';
-import { deleteOneList } from '../../Requests/deleteOneList';
-import { updateOneList } from '../../Requests/updateOneList';
-import { createOneCard } from '../../Requests/createOneCard';
-import { updateOneCard } from '../../Requests/updateOneCard';
-import { deleteOneCard } from '../../Requests/deleteOneCard';
-import { getAllTags } from '../../Requests/getAllTags';
-import { createOneTag } from '../../Requests/createOneTag';
-
-import './App.css';
+import { getAllLists } from '../Requests/getAllLists';
+import { createOneList } from '../Requests/createOneList';
+import { getAllCards } from '../Requests/getAllCards';
+import { deleteOneList } from '../Requests/deleteOneList';
+import { updateOneList } from '../Requests/updateOneList';
+import { createOneCard } from '../Requests/createOneCard';
+import { updateOneCard } from '../Requests/updateOneCard';
+import { deleteOneCard } from '../Requests/deleteOneCard';
+import { getAllTags } from '../Requests/getAllTags';
+import { createOneTag } from '../Requests/createOneTag';
+import Home from './Home';
+import Header from './Header';
 
 function App() {
   const [listsData, setListsData] = useState(null);
@@ -139,7 +139,9 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className="text-[#FFFFFF]">
+      <Header />
+      <Home />
       {!listsData
         ? 'Loading...'
         : listsData
@@ -239,7 +241,6 @@ function App() {
         </label>
         <input type="submit" value="Envoyer" />
       </form>
-      {/* *************** */}
       <form onSubmit={handleSubmitTag}>
         <label>
           New Tag name:
