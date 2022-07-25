@@ -139,7 +139,7 @@ function App() {
   };
 
   return (
-    <div className="text-[#FFFFFF]">
+    <div className="text-[#FFFFFF] font-advent">
       <Header />
       <Home />
       {!listsData

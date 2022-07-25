@@ -1,6 +1,9 @@
-html {
-  background-color: black;
-  }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap');
+html {
+  background-color: black;
+  }
+
