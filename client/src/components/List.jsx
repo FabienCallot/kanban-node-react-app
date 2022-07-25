@@ -15,7 +15,12 @@ const List = ({ listId, listName }) => {
     >
       <div className="list-header flex justify-between items-center">
         <h3 className="p-2 font-akaya mb-2 text-xl">{listName}</h3>
-        <Modal classNameButton="mt-0 mb-0 ml-0" title={'Create new task'} />
+        <Modal
+          id="2"
+          classNameButton="mt-0 mb-0 ml-0"
+          title={'Create new task'}
+          listId={listId}
+        />
       </div>
       <div className="list-tasks">
         {tasksData
