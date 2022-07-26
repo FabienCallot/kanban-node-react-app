@@ -18,9 +18,9 @@ export default function Modal({
   const handleName = (event) => {
     setName(event.target.value);
   };
-  const handleSubmitList = (event) => {
-    createOneList(event, name);
-    setShowModal(false);
+  const handleSubmitList = async (event) => {
+    const response = await createOneList(event, name);
+    response ? setShowModal(false) : console.log('error list re render');
   };
   const handleSubmitCard = (event, id) => {
     createOneCard(event, name, id);

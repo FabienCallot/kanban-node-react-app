@@ -7,12 +7,8 @@ const Home = () => {
   const [listsData, setListsData] = useState();
   const [showModal, setShowModal] = useState(false);
 
-  /* A hook that is called after every render. It is used to perform side effects. */
   useEffect(() => {
-    !showModal &&
-      setTimeout(() => {
-        getAllLists(setListsData);
-      }, 100);
+    !showModal && getAllLists(setListsData);
   }, [showModal]);
 
   return (
@@ -28,8 +24,6 @@ const Home = () => {
       </div>
 
       <div className="home-lists flex items-start flex-wrap">
-        {/* /* Checking if listsData is true, if it is true it will sort the data by id and map over it to
-        display all the lists. */}
         {!listsData
           ? 'loading'
           : listsData
