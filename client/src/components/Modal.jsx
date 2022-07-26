@@ -24,13 +24,13 @@ export default function Modal({
   };
   const handleSubmitCard = async (event, id) => {
     const response = await createOneCard(event, name, id);
-    response ? setShowModal(false) : console.log('error card re-render');
+    response ? setShowModal(false) : console.log('error task re-render');
   };
 
   return (
     <>
       <Button
-        className={`list-header-button mt-20 mb-10 ml-4 ${classNameButton}`}
+        className={`${classNameButton}`}
         text={<BsPlusLg className="mx-auto" />}
         clickEvent={() => {
           setShowModal(true);
@@ -40,7 +40,7 @@ export default function Modal({
         <>
           <div
             id={id}
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-xl"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
@@ -54,20 +54,18 @@ export default function Modal({
                   ></button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
-                  <form>
-                    <label>
-                      Name:
-                      <input
-                        id="new-item-name"
-                        type="text"
-                        name={'name'}
-                        onChange={handleName}
-                      />
-                    </label>
-                    <input type="submit" value="Envoyer" />
-                  </form>
-                </div>
+                <form className="relative p-6 flex justify-between">
+                  <label>
+                    Name
+                    <input
+                      className="ml-2 p-2 text-black font-semibold rounded"
+                      id="new-item-name"
+                      type="text"
+                      name={'name'}
+                      onChange={handleName}
+                    />
+                  </label>
+                </form>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
@@ -75,7 +73,7 @@ export default function Modal({
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    Abort
                   </button>
                   <button
                     form="new-item-name"
@@ -87,7 +85,7 @@ export default function Modal({
                         : handleSubmitCard(e, listId);
                     }}
                   >
-                    Save Changes
+                    Create
                   </button>
                 </div>
               </div>

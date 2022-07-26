@@ -13,13 +13,13 @@ const List = ({ listId, listName }) => {
 
   return (
     <div
-      className={`${listId} bg-[#262626] w-[250px] min-w-[250px] m-4 p-4 rounded-lg h-auto`}
+      className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
     >
       <div className="list-header flex justify-between items-center">
         <h3 className="p-2 font-akaya mb-2 text-xl">{listName}</h3>
         <Modal
           id="2"
-          classNameButton="mt-0 mb-0 ml-0"
+          classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 hover:bg-[#373737] hover:border-none hover:scale-125 hover:rotate-90 transition duration-500 hover:duration-1500"
           title={'Create new task'}
           listId={listId}
           showModal={showModal}
@@ -28,9 +28,9 @@ const List = ({ listId, listName }) => {
       </div>
       <div className="list-tasks">
         {tasksData
-          ? tasksData.map((task) => (
-              <Task key={task.id} name={task.description} />
-            ))
+          ? tasksData
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map((task) => <Task key={task.id} name={task.description} />)
           : null}
       </div>
     </div>
