@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { getAllLists } from '../Requests/getAllLists';
-import { createOneList } from '../Requests/createOneList';
 import { getAllCards } from '../Requests/getAllCards';
 import { deleteOneList } from '../Requests/deleteOneList';
 import { updateOneList } from '../Requests/updateOneList';
-import { createOneCard } from '../Requests/createOneCard';
 import { updateOneCard } from '../Requests/updateOneCard';
 import { deleteOneCard } from '../Requests/deleteOneCard';
 import { getAllTags } from '../Requests/getAllTags';
@@ -27,7 +25,6 @@ function App() {
   const [height, setHeight] = useState(0);
   useEffect(() => {
     currentHeight(setHeight);
-    getAllCards(setCardsData);
     getAllTags(setTagsData);
   }, []);
 
@@ -61,32 +58,6 @@ function App() {
     setTagColor(event.target.value);
   };
 
-  /**
-   * It creates a new list, then after 200 milliseconds, it gets all the lists and sets the state of
-   * the lists data
-   */
-  // const handleSubmitList = (event) => {
-  //   createOneList(event, listName);
-
-  //   setTimeout(() => {
-  //     getAllLists(setListsData);
-  //   }, 200);
-  // };
-
-  /**
-   * The function creates a new card, then after 200 milliseconds, it updates the list data
-   */
-  const handleSubmitCard = (event, id) => {
-    createOneCard(event, cardName, id);
-
-    setTimeout(() => {
-      getAllCards(setCardsData);
-    }, 200);
-  };
-
-  /**
-   * It creates a new tag and then gets all the tags.
-   */
   const handleSubmitTag = (event) => {
     createOneTag(event, tagName, tagColor);
 

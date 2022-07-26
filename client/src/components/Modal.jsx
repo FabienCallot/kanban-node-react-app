@@ -20,11 +20,11 @@ export default function Modal({
   };
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name);
-    response ? setShowModal(false) : console.log('error list re render');
+    response ? setShowModal(false) : console.log('error list re-render');
   };
-  const handleSubmitCard = (event, id) => {
-    createOneCard(event, name, id);
-    setShowModal(false);
+  const handleSubmitCard = async (event, id) => {
+    const response = await createOneCard(event, name, id);
+    response ? setShowModal(false) : console.log('error card re-render');
   };
 
   return (
