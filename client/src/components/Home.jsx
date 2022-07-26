@@ -9,7 +9,10 @@ const Home = () => {
 
   /* A hook that is called after every render. It is used to perform side effects. */
   useEffect(() => {
-    !showModal && getAllLists(setListsData);
+    !showModal &&
+      setTimeout(() => {
+        getAllLists(setListsData);
+      }, 100);
   }, [showModal]);
 
   return (

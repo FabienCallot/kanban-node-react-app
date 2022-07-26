@@ -8,7 +8,10 @@ const List = ({ listId, listName }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    !showModal && getAllTasksByListId(setTasksData, listId);
+    !showModal &&
+      setTimeout(() => {
+        getAllTasksByListId(setTasksData, listId);
+      }, 100);
   }, [showModal, listId]);
 
   return (
