@@ -4,26 +4,27 @@ import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
 import Button from './Button';
 
-export default function Modal({ classNameButton, title, id, listId }) {
-  const [showModal, setShowModal] = useState(false);
+export default function Modal({
+  classNameButton,
+  title,
+  id,
+  listId,
+  setShowModal,
+  showModal,
+}) {
   const [name, setName] = useState(false);
   const idModal = id;
 
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
   const handleName = (event) => {
     setName(event.target.value);
   };
   const handleSubmitList = (event) => {
     createOneList(event, name);
     setShowModal(false);
-    refreshPage();
   };
   const handleSubmitCard = (event, id) => {
     createOneCard(event, name, id);
     setShowModal(false);
-    refreshPage();
   };
 
   return (

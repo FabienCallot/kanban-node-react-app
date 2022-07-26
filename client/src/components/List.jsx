@@ -5,10 +5,12 @@ import Modal from './Modal';
 
 const List = ({ listId, listName }) => {
   const [tasksData, setTasksData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    getAllTasksByListId(setTasksData, listId);
-  }, []);
+    !showModal && getAllTasksByListId(setTasksData, listId);
+  }, [showModal, listId]);
+
   return (
     <div
       className={`${listId} bg-[#262626] w-[250px] min-w-[250px] m-4 p-4 rounded-lg h-auto`}
@@ -20,6 +22,8 @@ const List = ({ listId, listName }) => {
           classNameButton="mt-0 mb-0 ml-0"
           title={'Create new task'}
           listId={listId}
+          showModal={showModal}
+          setShowModal={setShowModal}
         />
       </div>
       <div className="list-tasks">
