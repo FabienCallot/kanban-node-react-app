@@ -1,10 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { getAllLists } from '../Requests/getAllLists';
 import { getAllCards } from '../Requests/getAllCards';
-import { deleteOneList } from '../Requests/deleteOneList';
-import { updateOneList } from '../Requests/updateOneList';
-import { updateOneCard } from '../Requests/updateOneTask';
 import { deleteOneCard } from '../Requests/deleteOneTask';
 import { getAllTags } from '../Requests/getAllTags';
 import { createOneTag } from '../Requests/createOneTag';
@@ -15,7 +11,6 @@ import Button from './Button';
 import { scrollToTop } from '../utils/srollToTop';
 
 function App() {
-  const [listsData, setListsData] = useState(null);
   const [listName, setListName] = useState('');
   const [cardsData, setCardsData] = useState(null);
   const [cardName, setCardName] = useState('');
@@ -71,12 +66,6 @@ function App() {
   /**
    * It deletes a list and then updates the list of lists.
    */
-  const handleDeleteList = (e, id) => {
-    deleteOneList(e, id);
-    setTimeout(() => {
-      getAllLists(setListsData);
-    }, 200);
-  };
 
   /**
    * It deletes a card from the database and then refreshes the page to show the updated list of cards.

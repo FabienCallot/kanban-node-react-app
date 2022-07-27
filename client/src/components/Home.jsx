@@ -13,6 +13,7 @@ const Home = () => {
     refreshList && getAllLists(setListsData);
     refreshList && setRefreshList(false);
   }, [showModalList, refreshList]);
+
   return (
     <div className="home p-4 pt-20">
       <div className="home-header flex ">

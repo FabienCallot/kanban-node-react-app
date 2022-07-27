@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
@@ -6,6 +6,8 @@ import { createOneList } from '../Requests/createOneList';
 import { updateOneCard } from '../Requests/updateOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
+import { deleteOneList } from '../Requests/deleteOneList';
+import Courage from './ConfirmModal';
 
 export default function Modal({
   classNameButton,
@@ -19,8 +21,9 @@ export default function Modal({
   setRefreshTask,
 }) {
   const [name, setName] = useState(false);
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
+  const [deleteList, setDeleteList] = useState(false);
   const idModal = id;
-  //console.log(idModal);
 
   const handleName = (event) => {
     setName(event.target.value);
@@ -44,10 +47,22 @@ export default function Modal({
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
     const response = updateOneCard(id, cardName);
-    response ? setShowModal(false) : console.log('error task re-render');
+    response ? setShowModal(false) : console.log('error update task re-render');
     setRefreshTask(true);
   };
-  console.log(idModal);
+
+  useEffect(
+    (e) => {
+      const handleDeleteList = async (e, id) => {
+        deleteOneList(e, id);
+        setShowModal(false);
+        setRefreshList(true);
+        setDeleteList(false);
+      };
+      deleteList && handleDeleteList(e, listId);
+    },
+    [deleteList, listId, setShowModal, setDeleteList, setRefreshList]
+  );
 
   return (
     <>
@@ -77,20 +92,23 @@ export default function Modal({
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
                   {idModal === 3 && (
-                    <button
-                      className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      DELETE List
-                    </button>
+                    <>
+                      <button
+                        className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={(e) => {
+                          setShowModalConfirm(true);
+                        }}
+                      >
+                        DELETE List
+                      </button>
+                      <Courage
+                        showModalConfirm={showModalConfirm}
+                        setShowModalConfirm={setShowModalConfirm}
+                        setDeleteList={setDeleteList}
+                      />
+                    </>
                   )}
-
-                  {/* TODO: check <hath is that button
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  ></button> */}
                 </div>
                 {/*body*/}
                 <form className="relative p-6 flex justify-between">
@@ -122,10 +140,8 @@ export default function Modal({
                       if (idModal === 1) {
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
-                        console.log(listId);
                         handleSubmitCard(e, listId);
                       } else if (idModal === 3) {
-                        console.log(listId);
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {
                         handleUpdateTaskName(e, taskId, name);
