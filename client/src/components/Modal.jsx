@@ -47,16 +47,17 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
   };
+  console.log(idModal);
 
   return (
     <>
       <Button
         className={`${classNameButton}`}
         text={
-          idModal === 3 || 4 ? (
-            <FaPen className="mx-auto" />
-          ) : (
+          idModal === 1 || idModal === 2 ? (
             <BsPlusLg className="mx-auto" />
+          ) : (
+            <FaPen className="mx-auto" />
           )
         }
         clickEvent={() => {
