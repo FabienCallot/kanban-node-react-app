@@ -3,7 +3,7 @@ import { BsPlusLg } from 'react-icons/bs';
 import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
-import { updateOneCard } from '../Requests/updateOneCard';
+import { updateOneCard } from '../Requests/updateOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 
