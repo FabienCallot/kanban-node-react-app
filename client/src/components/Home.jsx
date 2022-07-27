@@ -5,22 +5,24 @@ import Modal from './Modal';
 
 const Home = () => {
   const [listsData, setListsData] = useState();
-  const [showModal, setShowModal] = useState(false);
+  const [showModalList, setShowModalList] = useState(false);
+  const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
-    !showModal && getAllLists(setListsData);
-  }, [showModal]);
-
+    !showModalList && getAllLists(setListsData);
+    refreshList && getAllLists(setListsData);
+    refreshList && setRefreshList(false);
+  }, [showModalList, refreshList]);
   return (
     <div className="home p-4 pt-20">
       <div className="home-header flex ">
         <h2 className="text-3xl mt-20 mb-10">RoadMap</h2>
         <Modal
           classNameButton="list-header-button mt-20 mb-10 ml-4 border rounded w-8 h-8 hover:bg-[#373737] hover:border-none hover:scale-125 hover:rotate-90 transition duration-500 hover:duration-1500"
-          id="1"
+          id={1}
           title={'Create new list'}
-          showModal={showModal}
-          setShowModal={setShowModal}
+          showModal={showModalList}
+          setShowModal={setShowModalList}
         />
       </div>
 
@@ -34,8 +36,7 @@ const Home = () => {
                   key={list.id}
                   listName={list.name}
                   listId={list.id}
-                  showModal={showModal}
-                  setShowModal={setShowModal}
+                  setRefreshList={setRefreshList}
                 />
               ))}
       </div>

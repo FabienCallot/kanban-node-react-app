@@ -1,7 +1,9 @@
 import { React, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
+import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
+import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 
 export default function Modal({
@@ -11,9 +13,11 @@ export default function Modal({
   listId,
   setShowModal,
   showModal,
+  setRefreshList,
 }) {
   const [name, setName] = useState(false);
   const idModal = id;
+  //console.log(idModal);
 
   const handleName = (event) => {
     setName(event.target.value);
@@ -27,11 +31,24 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
   };
 
+  const handleUpdateListName = async (event, id, listName) => {
+    event.preventDefault();
+    const response = updateOneList(id, listName);
+    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshList(true);
+  };
+
   return (
     <>
       <Button
         className={`${classNameButton}`}
-        text={<BsPlusLg className="mx-auto" />}
+        text={
+          idModal === 3 ? (
+            <FaPen className="mx-auto" />
+          ) : (
+            <BsPlusLg className="mx-auto" />
+          )
+        }
         clickEvent={() => {
           setShowModal(true);
         }}
@@ -80,12 +97,18 @@ export default function Modal({
                     className="close bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
                     onClick={(e) => {
-                      idModal === '1'
-                        ? handleSubmitList(e, name)
-                        : handleSubmitCard(e, listId);
+                      if (idModal === 1) {
+                        handleSubmitList(e, name);
+                      } else if (idModal === 2) {
+                        console.log(listId);
+                        handleSubmitCard(e, listId);
+                      } else if (idModal === 3) {
+                        console.log(listId);
+                        handleUpdateListName(e, listId, name);
+                      }
                     }}
                   >
-                    Create
+                    {idModal === 1 || idModal === 2 ? 'Create' : 'Update'}
                   </button>
                 </div>
               </div>
@@ -96,4 +119,6 @@ export default function Modal({
       ) : null}
     </>
   );
+
+  //TODO:PropTypes
 }
