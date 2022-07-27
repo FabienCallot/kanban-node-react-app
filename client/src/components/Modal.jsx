@@ -76,10 +76,21 @@ export default function Modal({
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
+                  {idModal === 3 && (
+                    <button
+                      className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                    >
+                      DELETE List
+                    </button>
+                  )}
+
+                  {/* TODO: check <hath is that button
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
-                  ></button>
+                  ></button> */}
                 </div>
                 {/*body*/}
                 <form className="relative p-6 flex justify-between">
