@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { getAllLists } from '../Requests/getAllLists';
 import { getAllCards } from '../Requests/getAllCards';
-import { deleteOneList } from '../Requests/deleteOneList';
-import { updateOneList } from '../Requests/updateOneList';
-import { updateOneCard } from '../Requests/updateOneCard';
-import { deleteOneCard } from '../Requests/deleteOneCard';
+import { deleteOneCard } from '../Requests/deleteOneTask';
 import { getAllTags } from '../Requests/getAllTags';
 import { createOneTag } from '../Requests/createOneTag';
 import Home from './Home';
@@ -15,7 +11,6 @@ import Button from './Button';
 import { scrollToTop } from '../utils/srollToTop';
 
 function App() {
-  const [listsData, setListsData] = useState(null);
   const [listName, setListName] = useState('');
   const [cardsData, setCardsData] = useState(null);
   const [cardName, setCardName] = useState('');
@@ -68,52 +63,6 @@ function App() {
     }, 200);
   };
 
-  /**
-   * It deletes a list and then updates the list of lists.
-   */
-  const handleDeleteList = (e, id) => {
-    deleteOneList(e, id);
-    setTimeout(() => {
-      getAllLists(setListsData);
-    }, 200);
-  };
-
-  /**
-   * It deletes a card from the database and then refreshes the page to show the updated list of cards.
-   */
-  const handleDeleteCard = (e, id) => {
-    deleteOneCard(e, id);
-    setTimeout(() => {
-      getAllCards(setCardsData);
-    }, 200);
-  };
-
-  /**
-   * It takes an event, an id, and a listName, and then it updates the list with the given id and
-   * listName, and then it gets all the lists and sets the listsData to the result
-   */
-  const handleUpdateListName = (event, id, listName) => {
-    event.preventDefault();
-    updateOneList(id, listName);
-
-    setTimeout(() => {
-      getAllLists(setListsData);
-    }, 200);
-  };
-
-  /**
-   * It takes an event, an id, and a cardName, and then it updates the card with the given id and
-   * cardName, and then it gets all the cards and sets the cardsData to the cards that it gets
-   */
-  const handleUpdateCardName = (event, id, cardName) => {
-    event.preventDefault();
-    updateOneCard(id, cardName);
-
-    setTimeout(() => {
-      getAllCards(setCardsData);
-    }, 200);
-  };
-
   return (
     <div className="text-[#FFFFFF] font-advent">
       {height < 20 ? <Header /> : <Header className=" opacity-20" />}
@@ -127,117 +76,6 @@ function App() {
           text="&#8679;"
         />
       ) : null}
-
-      {/* {!listsData
-        ? 'Loading...'
-        : listsData
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map((list) => (
-              <div
-                key={list.id}
-                style={{
-                  margin: '30px',
-                  border: 'solid 1px black',
-                  padding: '1rem',
-                }}
-              >
-                <div>
-                  <p>{list.name}</p>
-                  <form
-                    onSubmit={(e) => {
-                      handleUpdateListName(e, list.id, listName);
-                    }}
-                  >
-                    <label>
-                      update list:
-                      <input
-                        id="new-list-name"
-                        type="text"
-                        name={'name'}
-                        onChange={handleListName}
-                      />
-                    </label>
-                    <input type="submit" value="Envoyer" />
-                  </form>
-                  <button
-                    onClick={(e) => {
-                      handleDeleteList(e, list.id, list.name);
-                    }}
-                  >
-                    delete list
-                  </button>
-                </div>
-                <div>
-                  {!cardsData
-                    ? 'Loading...'
-                    : cardsData
-                        .sort((a, b) => (a.id > b.id ? 1 : -1))
-                        .map(
-                          (card) =>
-                            list.id === card.list_id && (
-                              <div key={card.id}>
-                                <p>{card.description}</p>
-                                <form
-                                  onSubmit={(e) => {
-                                    handleUpdateCardName(e, card.id, cardName);
-                                  }}
-                                >
-                                  <label>
-                                    update card:
-                                    <input
-                                      type="text"
-                                      name={'name'}
-                                      onChange={handleCardName}
-                                    />
-                                  </label>
-                                  <input type="submit" value="Envoyer" />
-                                </form>
-                                <button
-                                  onClick={(e) => {
-                                    handleDeleteCard(e, card.id);
-                                  }}
-                                >
-                                  delete card
-                                </button>
-                              </div>
-                            )
-                        )}
-                  <form
-                    onSubmit={(e) => {
-                      handleSubmitCard(e, list.id);
-                    }}
-                  >
-                    <label>
-                      New card :
-                      <input
-                        type="text"
-                        name={'name'}
-                        onChange={handleCardName}
-                      />
-                    </label>
-                    <input type="submit" value="Envoyer" />
-                  </form>
-                </div>
-              </div>
-            ))}
-      <form onSubmit={handleSubmitList}>
-        <label>
-          New List:
-          <input type="text" name={'name'} onChange={handleListName} />
-        </label>
-        <input type="submit" value="Envoyer" />
-      </form>
-      <form onSubmit={handleSubmitTag}>
-        <label>
-          New Tag name:
-          <input type="text" name={'name'} onChange={handleTagName} />
-        </label>
-        <label>
-          New Tag color:
-          <input type="text" name={'color'} onChange={handleTagColor} />
-        </label>
-        <input type="submit" value="Envoyer" />
-      </form> */}
     </div>
   );
 }

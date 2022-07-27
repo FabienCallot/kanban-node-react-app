@@ -1,8 +1,14 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
+import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
+import { updateOneCard } from '../Requests/updateOneTask';
+import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
+import { deleteOneList } from '../Requests/deleteOneList';
+import ConfirmModal from './ConfirmModal';
+import { deleteOneTask } from '../Requests/deleteOneTask';
 
 export default function Modal({
   classNameButton,
@@ -11,8 +17,14 @@ export default function Modal({
   listId,
   setShowModal,
   showModal,
+  setRefreshList,
+  taskId,
+  setRefreshTask,
 }) {
   const [name, setName] = useState(false);
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
+  const [deleteList, setDeleteList] = useState(false);
+  const [deleteTask, setDeleteTask] = useState(false);
   const idModal = id;
 
   const handleName = (event) => {
@@ -27,11 +39,61 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
   };
 
+  const handleUpdateListName = async (event, id, listName) => {
+    event.preventDefault();
+    const response = updateOneList(id, listName);
+    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshList(true);
+  };
+
+  const handleUpdateTaskName = (event, id, cardName) => {
+    event.preventDefault();
+    const response = updateOneCard(id, cardName);
+    response ? setShowModal(false) : console.log('error update task re-render');
+    setRefreshTask(true);
+  };
+
+  useEffect(
+    (e) => {
+      const handleDeleteList = async (e, id) => {
+        deleteOneList(e, id);
+        setShowModal(false);
+        setRefreshList(true);
+        setDeleteList(false);
+      };
+      const handleDeleteTask = (e, id) => {
+        deleteOneTask(e, id);
+        setShowModal(false);
+        setRefreshTask(true);
+        setDeleteTask(false);
+      };
+      deleteList && handleDeleteList(e, listId);
+      deleteTask && handleDeleteTask(e, taskId);
+    },
+    [
+      deleteList,
+      listId,
+      setShowModal,
+      setDeleteList,
+      setRefreshList,
+      setRefreshTask,
+      taskId,
+      deleteTask,
+      setDeleteTask,
+    ]
+  );
+
   return (
     <>
       <Button
         className={`${classNameButton}`}
-        text={<BsPlusLg className="mx-auto" />}
+        text={
+          idModal === 1 || idModal === 2 ? (
+            <BsPlusLg className="mx-auto" />
+          ) : (
+            <FaPen className="mx-auto" />
+          )
+        }
         clickEvent={() => {
           setShowModal(true);
         }}
@@ -48,10 +110,26 @@ export default function Modal({
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  ></button>
+                  {(idModal === 3 || idModal === 4) && (
+                    <>
+                      <button
+                        className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={(e) => {
+                          setShowModalConfirm(true);
+                        }}
+                      >
+                        {idModal === 3 ? 'DELETE List' : 'DELETE Task'}
+                      </button>
+                      <ConfirmModal
+                        showModalConfirm={showModalConfirm}
+                        setShowModalConfirm={setShowModalConfirm}
+                        setDeleteElement={
+                          idModal === 3 ? setDeleteList : setDeleteTask
+                        }
+                      />
+                    </>
+                  )}
                 </div>
                 {/*body*/}
                 <form className="relative p-6 flex justify-between">
@@ -80,12 +158,18 @@ export default function Modal({
                     className="close bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
                     onClick={(e) => {
-                      idModal === '1'
-                        ? handleSubmitList(e, name)
-                        : handleSubmitCard(e, listId);
+                      if (idModal === 1) {
+                        handleSubmitList(e, name);
+                      } else if (idModal === 2) {
+                        handleSubmitCard(e, listId);
+                      } else if (idModal === 3) {
+                        handleUpdateListName(e, listId, name);
+                      } else if (idModal === 4) {
+                        handleUpdateTaskName(e, taskId, name);
+                      }
                     }}
                   >
-                    Create
+                    {idModal === 1 || idModal === 2 ? 'Create' : 'Update'}
                   </button>
                 </div>
               </div>
@@ -96,4 +180,6 @@ export default function Modal({
       ) : null}
     </>
   );
+
+  //TODO:PropTypes
 }
