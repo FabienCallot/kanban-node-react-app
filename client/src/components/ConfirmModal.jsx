@@ -1,8 +1,8 @@
 import { React } from 'react';
 
-export default function Modal({
+export default function ConfirmModal({
   setShowModalConfirm,
-  setDeleteList,
+  setDeleteElement,
   showModalConfirm,
 }) {
   return (
@@ -30,7 +30,7 @@ export default function Modal({
                     className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={(e) => {
-                      setDeleteList(true);
+                      setDeleteElement(true);
                       setShowModalConfirm(false);
                     }}
                   >

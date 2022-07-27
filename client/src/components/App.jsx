@@ -63,20 +63,6 @@ function App() {
     }, 200);
   };
 
-  /**
-   * It deletes a list and then updates the list of lists.
-   */
-
-  /**
-   * It deletes a card from the database and then refreshes the page to show the updated list of cards.
-   */
-  const handleDeleteCard = (e, id) => {
-    deleteOneCard(e, id);
-    setTimeout(() => {
-      getAllCards(setCardsData);
-    }, 200);
-  };
-
   return (
     <div className="text-[#FFFFFF] font-advent">
       {height < 20 ? <Header /> : <Header className=" opacity-20" />}

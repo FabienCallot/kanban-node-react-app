@@ -12,9 +12,8 @@ const List = ({ listId, listName, setRefreshList }) => {
 
   useEffect(() => {
     !showModalCreateTask && getAllTasksByListId(setTasksData, listId);
-
     refreshTask && getAllTasksByListId(setTasksData, listId);
-    refreshTask && setRefreshList(false);
+    refreshTask && setRefreshTask(false);
   }, [showModalCreateTask, listId, refreshTask, setRefreshList]);
 
   return (

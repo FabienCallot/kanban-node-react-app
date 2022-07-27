@@ -1,4 +1,4 @@
-export async function deleteOneCard(e, id) {
+export async function deleteOneTask(e, id) {
   try {
     const response = await fetch(
       `https://kanban-node-react-app.herokuapp.com/cards/${id}`,

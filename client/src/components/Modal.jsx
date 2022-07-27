@@ -7,7 +7,8 @@ import { updateOneCard } from '../Requests/updateOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import { deleteOneList } from '../Requests/deleteOneList';
-import Courage from './ConfirmModal';
+import ConfirmModal from './ConfirmModal';
+import { deleteOneTask } from '../Requests/deleteOneTask';
 
 export default function Modal({
   classNameButton,
@@ -23,6 +24,7 @@ export default function Modal({
   const [name, setName] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
+  const [deleteTask, setDeleteTask] = useState(false);
   const idModal = id;
 
   const handleName = (event) => {
@@ -59,9 +61,26 @@ export default function Modal({
         setRefreshList(true);
         setDeleteList(false);
       };
+      const handleDeleteTask = (e, id) => {
+        deleteOneTask(e, id);
+        setShowModal(false);
+        setRefreshTask(true);
+        setDeleteTask(false);
+      };
       deleteList && handleDeleteList(e, listId);
+      deleteTask && handleDeleteTask(e, taskId);
     },
-    [deleteList, listId, setShowModal, setDeleteList, setRefreshList]
+    [
+      deleteList,
+      listId,
+      setShowModal,
+      setDeleteList,
+      setRefreshList,
+      setRefreshTask,
+      taskId,
+      deleteTask,
+      setDeleteTask,
+    ]
   );
 
   return (
@@ -91,7 +110,7 @@ export default function Modal({
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
-                  {idModal === 3 && (
+                  {(idModal === 3 || idModal === 4) && (
                     <>
                       <button
                         className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -100,12 +119,14 @@ export default function Modal({
                           setShowModalConfirm(true);
                         }}
                       >
-                        DELETE List
+                        {idModal === 3 ? 'DELETE List' : 'DELETE Task'}
                       </button>
-                      <Courage
+                      <ConfirmModal
                         showModalConfirm={showModalConfirm}
                         setShowModalConfirm={setShowModalConfirm}
-                        setDeleteList={setDeleteList}
+                        setDeleteElement={
+                          idModal === 3 ? setDeleteList : setDeleteTask
+                        }
                       />
                     </>
                   )}
