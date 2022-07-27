@@ -3,6 +3,7 @@ import { BsPlusLg } from 'react-icons/bs';
 import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
+import { updateOneCard } from '../Requests/updateOneCard';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 
@@ -14,6 +15,8 @@ export default function Modal({
   setShowModal,
   showModal,
   setRefreshList,
+  taskId,
+  setRefreshTask,
 }) {
   const [name, setName] = useState(false);
   const idModal = id;
@@ -38,12 +41,19 @@ export default function Modal({
     setRefreshList(true);
   };
 
+  const handleUpdateTaskName = (event, id, cardName) => {
+    event.preventDefault();
+    const response = updateOneCard(id, cardName);
+    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshTask(true);
+  };
+
   return (
     <>
       <Button
         className={`${classNameButton}`}
         text={
-          idModal === 3 ? (
+          idModal === 3 || 4 ? (
             <FaPen className="mx-auto" />
           ) : (
             <BsPlusLg className="mx-auto" />
@@ -105,6 +115,8 @@ export default function Modal({
                       } else if (idModal === 3) {
                         console.log(listId);
                         handleUpdateListName(e, listId, name);
+                      } else if (idModal === 4) {
+                        handleUpdateTaskName(e, taskId, name);
                       }
                     }}
                   >

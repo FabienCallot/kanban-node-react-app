@@ -7,10 +7,16 @@ const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
   const [showModalCreateTask, setShowModalCreateTask] = useState(false);
   const [showModalEditList, setShowModalEditList] = useState(false);
+  const [showModalEditTask, setShowModalEditTask] = useState(false);
+  const [refreshTask, setRefreshTask] = useState(false);
 
   useEffect(() => {
     !showModalCreateTask && getAllTasksByListId(setTasksData, listId);
-  }, [showModalCreateTask, listId]);
+
+    refreshTask && getAllTasksByListId(setTasksData, listId);
+    refreshTask && setRefreshList(false);
+  }, [showModalCreateTask, listId, refreshTask, setRefreshList]);
+
   return (
     <div
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
@@ -41,7 +47,20 @@ const List = ({ listId, listName, setRefreshList }) => {
         {tasksData
           ? tasksData
               .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map((task) => <Task key={task.id} name={task.description} />)
+              .map((task) => (
+                <Task
+                  key={task.id}
+                  name={task.description}
+                  idModal={4}
+                  classNameButtonModal={`${listId} edit-button`}
+                  titleModal={'Edit list'}
+                  listId={listId}
+                  showModal={showModalEditTask}
+                  setShowModal={setShowModalEditTask}
+                  taskId={task.id}
+                  setRefreshTask={setRefreshTask}
+                />
+              ))
           : null}
       </div>
     </div>
