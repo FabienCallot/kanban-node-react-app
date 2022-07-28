@@ -25,7 +25,6 @@ function App() {
     getAllTags(setTagsData);
   }, []);
 
-
   //TODO:  features in comming
   // const handleTagName = (event) => {
   //   setTagName(event.target.value);
