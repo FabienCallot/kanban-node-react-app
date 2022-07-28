@@ -1,12 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import { getAllTasksByListId } from '../Requests/getAllTasksByListId';
+import { getAllTags } from '../Requests/getAllTags';
 import Task from './Task';
 import Modal from './Modal';
 
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
   const [refreshTask, setRefreshTask] = useState(false);
+  const [tagsData, setTagsData] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(0);
+
   useEffect(() => {
+    getAllTags(setTagsData);
     getAllTasksByListId(setTasksData, listId);
     if (refreshTask) {
       getAllTasksByListId(setTasksData, listId);
@@ -15,6 +20,8 @@ const List = ({ listId, listName, setRefreshList }) => {
       return;
     }
   }, [listId, refreshTask, setRefreshList]);
+
+  //TODO: Make choice for color tags
 
   return (
     <div
@@ -28,6 +35,9 @@ const List = ({ listId, listName, setRefreshList }) => {
             title={'Create new task'}
             listId={listId}
             setRefreshTask={setRefreshTask}
+            tagsData={tagsData}
+            selectedTag={selectedTag}
+            setSelectedTag={setSelectedTag}
           />
         </>
         <h3 className="p-2 font-akaya mb-2 text-xl">{listName}</h3>
@@ -53,6 +63,10 @@ const List = ({ listId, listName, setRefreshList }) => {
                   listId={listId}
                   titleModal={'Edit list'}
                   setRefreshTask={setRefreshTask}
+                  tagsData={tagsData}
+                  selectedTag={selectedTag}
+                  setSelectedTag={setSelectedTag}
+                  tagColor={null}
                 />
               ))
           : null}

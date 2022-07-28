@@ -1,4 +1,3 @@
-
 export async function createOneCard(event, description, id) {
   event.preventDefault();
   const data = new FormData();
@@ -9,7 +8,7 @@ export async function createOneCard(event, description, id) {
     `https://kanban-node-react-app.herokuapp.com/cards`,
     {
       method: 'POST',
-      body: data
+      body: data,
     }
   );
   return response;

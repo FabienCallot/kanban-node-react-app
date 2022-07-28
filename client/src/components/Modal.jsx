@@ -7,10 +7,10 @@ import { updateOneCard } from '../Requests/updateOneTask';
 import { deleteOneList } from '../Requests/deleteOneList';
 import { deleteOneTask } from '../Requests/deleteOneTask';
 import { updateOneList } from '../Requests/updateOneList';
+import { associateTagToTask } from '../Requests/associateTagToTask';
 import Button from './Button';
 import ConfirmModal from './ConfirmModal';
 import DropDownMenu from './DropdownMenu';
-import { getAllTags } from '../Requests/getAllTags';
 
 export default function Modal({
   classNameButton,
@@ -20,16 +20,17 @@ export default function Modal({
   setRefreshList,
   taskId,
   setRefreshTask,
+  tagsData,
+  selectedTag,
+  setSelectedTag,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
-  const [tagsData, setTagsData] = useState(null);
 
   const idModal = id;
-
   const handleName = (event) => {
     setName(event.target.value);
   };
@@ -46,6 +47,7 @@ export default function Modal({
     setRefreshList(true);
   };
   const handleSubmitTask = async (event, id) => {
+    console.log(selectedTag);
     const response = await createOneCard(event, name, id);
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
@@ -54,13 +56,12 @@ export default function Modal({
     event.preventDefault();
     const response = updateOneCard(id, cardName);
     response ? setShowModal(false) : console.log('error update task re-render');
+    response && associateTagToTask(event, id, selectedTag);
     setRefreshTask(true);
   };
 
   useEffect(
     (e) => {
-      getAllTags(setTagsData);
-
       const handleDeleteList = async (e, id) => {
         deleteOneList(e, id);
         setShowModal(false);
@@ -111,9 +112,7 @@ export default function Modal({
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-xl"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#262626] outline-none focus:outline-none">
-                {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
                   {idModal === 3 && (
@@ -153,7 +152,6 @@ export default function Modal({
                     </>
                   )}
                 </div>
-                {/*body*/}
                 <form className="relative p-6 flex justify-between">
                   <label>
                     Name
@@ -167,10 +165,12 @@ export default function Modal({
                   </label>
                 </form>
                 {(idModal === 2 || idModal === 4) && (
-                  <DropDownMenu tagsData={tagsData} />
+                  <DropDownMenu
+                    tagsData={tagsData}
+                    selectedTag={selectedTag}
+                    setSelectedTag={setSelectedTag}
+                  />
                 )}
-
-                {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -187,7 +187,7 @@ export default function Modal({
                       if (idModal === 1) {
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
-                        handleSubmitTask(e, listId);
+                        handleSubmitTask(e, listId, selectedTag);
                       } else if (idModal === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {
