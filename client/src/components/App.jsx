@@ -1,9 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { getAllCards } from '../Requests/getAllCards';
-import { deleteOneCard } from '../Requests/deleteOneTask';
-import { getAllTags } from '../Requests/getAllTags';
-import { createOneTag } from '../Requests/createOneTag';
 import Home from './Home';
 import Header from './Header';
 import currentHeight from '../utils/currentHeight';
@@ -22,7 +18,6 @@ function App() {
   const [height, setHeight] = useState(0);
   useEffect(() => {
     currentHeight(setHeight);
-    getAllTags(setTagsData);
   }, []);
 
   //TODO:  features in comming

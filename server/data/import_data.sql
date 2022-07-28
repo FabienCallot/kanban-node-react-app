@@ -1,8 +1,10 @@
 BEGIN;
 
 INSERT INTO "tag" ("id", "name", "color") VALUES 
-(1, 'urgent', '#ff0000'),
-(2, 'bug', '#f0f');
+(1, 'urgent', '#C340A1'),
+(2, 'current', '#00B294'),
+(3, 'bug', '#DA3A3A'),
+(4, 'process', '#3F88E4');
 
 INSERT INTO "list" ("id", "name") VALUES
 (1, 'Backlog'),

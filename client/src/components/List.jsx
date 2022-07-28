@@ -6,7 +6,6 @@ import Modal from './Modal';
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
   const [refreshTask, setRefreshTask] = useState(false);
-
   useEffect(() => {
     getAllTasksByListId(setTasksData, listId);
     if (refreshTask) {

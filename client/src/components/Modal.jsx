@@ -10,6 +10,7 @@ import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import ConfirmModal from './ConfirmModal';
 import DropDownMenu from './DropdownMenu';
+import { getAllTags } from '../Requests/getAllTags';
 
 export default function Modal({
   classNameButton,
@@ -25,6 +26,7 @@ export default function Modal({
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
+  const [tagsData, setTagsData] = useState(null);
 
   const idModal = id;
 
@@ -57,6 +59,8 @@ export default function Modal({
 
   useEffect(
     (e) => {
+      getAllTags(setTagsData);
+
       const handleDeleteList = async (e, id) => {
         deleteOneList(e, id);
         setShowModal(false);
@@ -162,7 +166,9 @@ export default function Modal({
                     />
                   </label>
                 </form>
-                {(idModal === 2 || idModal === 4) && <DropDownMenu />}
+                {(idModal === 2 || idModal === 4) && (
+                  <DropDownMenu tagsData={tagsData} />
+                )}
 
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
