@@ -39,12 +39,6 @@ function App() {
   //     getAllTags(setTagsData);
   //   }, 200);
   // };
-  // const handleDeleteCard = (e, id) => {
-  //   deleteOneCard(e, id);
-  //   setTimeout(() => {
-  //     getAllCards(setCardsData);
-  //   }, 200);
-  // };
 
   return (
     <div className="text-[#FFFFFF] font-advent">
