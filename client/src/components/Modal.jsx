@@ -7,15 +7,13 @@ import { updateOneCard } from '../Requests/updateOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import { deleteOneList } from '../Requests/deleteOneList';
-import Courage from './ConfirmModal';
+import ConfirmModal from './ConfirmModal';
 
 export default function Modal({
   classNameButton,
   title,
   id,
   listId,
-  setShowModal,
-  showModal,
   setRefreshList,
   taskId,
   setRefreshTask,
@@ -23,6 +21,7 @@ export default function Modal({
   const [name, setName] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const idModal = id;
 
   const handleName = (event) => {
@@ -31,10 +30,7 @@ export default function Modal({
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name);
     response ? setShowModal(false) : console.log('error list re-render');
-  };
-  const handleSubmitCard = async (event, id) => {
-    const response = await createOneCard(event, name, id);
-    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshList(true);
   };
 
   const handleUpdateListName = async (event, id, listName) => {
@@ -43,7 +39,11 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshList(true);
   };
-
+  const handleSubmitTask = async (event, id) => {
+    const response = await createOneCard(event, name, id);
+    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshTask(true);
+  };
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
     const response = updateOneCard(id, cardName);
@@ -63,7 +63,7 @@ export default function Modal({
     },
     [deleteList, listId, setShowModal, setDeleteList, setRefreshList]
   );
-  //FIXME: PB ID TASK
+
   return (
     <>
       <Button
@@ -77,6 +77,7 @@ export default function Modal({
         }
         clickEvent={() => {
           setShowModal(true);
+          console.log(taskId);
         }}
       />
       {showModal ? (
@@ -102,7 +103,7 @@ export default function Modal({
                       >
                         DELETE List
                       </button>
-                      <Courage
+                      <ConfirmModal
                         showModalConfirm={showModalConfirm}
                         setShowModalConfirm={setShowModalConfirm}
                         setDeleteList={setDeleteList}
@@ -140,7 +141,7 @@ export default function Modal({
                       if (idModal === 1) {
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
-                        handleSubmitCard(e, listId);
+                        handleSubmitTask(e, listId);
                       } else if (idModal === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {

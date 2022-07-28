@@ -5,14 +5,18 @@ import Modal from './Modal';
 
 const Home = () => {
   const [listsData, setListsData] = useState();
-  const [showModalList, setShowModalList] = useState(false);
   const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
-    !showModalList && getAllLists(setListsData);
+    getAllLists(setListsData);
     refreshList && getAllLists(setListsData);
-    refreshList && setRefreshList(false);
-  }, [showModalList, refreshList]);
+    if (refreshList) {
+      getAllLists(setListsData);
+      setRefreshList(false);
+    } else {
+      return;
+    }
+  }, [refreshList]);
 
   return (
     <div className="home p-4 pt-20">
@@ -22,8 +26,7 @@ const Home = () => {
           classNameButton="list-header-button mt-20 mb-10 ml-4 border rounded w-8 h-8 hover:bg-[#373737] hover:border-none hover:scale-125 hover:rotate-90 transition duration-500 hover:duration-1500"
           id={1}
           title={'Create new list'}
-          showModal={showModalList}
-          setShowModal={setShowModalList}
+          setRefreshList={setRefreshList}
         />
       </div>
 
