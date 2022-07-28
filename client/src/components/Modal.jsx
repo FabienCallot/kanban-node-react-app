@@ -8,23 +8,24 @@ import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import { deleteOneList } from '../Requests/deleteOneList';
 import ConfirmModal from './ConfirmModal';
-import { deleteOneTask } from '../Requests/deleteOneTask';
+import { deleteOneCard } from '../Requests/deleteOneTask';
+
 
 export default function Modal({
   classNameButton,
   title,
   id,
   listId,
-  setShowModal,
-  showModal,
   setRefreshList,
   taskId,
   setRefreshTask,
 }) {
   const [name, setName] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
+
   const idModal = id;
 
   const handleName = (event) => {
@@ -33,10 +34,7 @@ export default function Modal({
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name);
     response ? setShowModal(false) : console.log('error list re-render');
-  };
-  const handleSubmitCard = async (event, id) => {
-    const response = await createOneCard(event, name, id);
-    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshList(true);
   };
 
   const handleUpdateListName = async (event, id, listName) => {
@@ -45,7 +43,11 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshList(true);
   };
-
+  const handleSubmitTask = async (event, id) => {
+    const response = await createOneCard(event, name, id);
+    response ? setShowModal(false) : console.log('error task re-render');
+    setRefreshTask(true);
+  };
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
     const response = updateOneCard(id, cardName);
@@ -68,7 +70,15 @@ export default function Modal({
         setDeleteTask(false);
       };
       deleteList && handleDeleteList(e, listId);
+
+      const handleDeleteTask = (e, id) => {
+        deleteOneCard(e, id);
+        setShowModal(false);
+        setRefreshTask(true);
+        setDeleteTask(false);
+      };
       deleteTask && handleDeleteTask(e, taskId);
+      
     },
     [
       deleteList,
@@ -76,10 +86,10 @@ export default function Modal({
       setShowModal,
       setDeleteList,
       setRefreshList,
-      setRefreshTask,
-      taskId,
       deleteTask,
-      setDeleteTask,
+      taskId,
+      setRefreshTask,
+
     ]
   );
 
@@ -119,14 +129,30 @@ export default function Modal({
                           setShowModalConfirm(true);
                         }}
                       >
-                        {idModal === 3 ? 'DELETE List' : 'DELETE Task'}
+                        DELETE List
                       </button>
                       <ConfirmModal
                         showModalConfirm={showModalConfirm}
                         setShowModalConfirm={setShowModalConfirm}
-                        setDeleteElement={
-                          idModal === 3 ? setDeleteList : setDeleteTask
-                        }
+                        setDeleteItem={setDeleteList}
+                      />
+                    </>
+                  )}
+                  {idModal === 4 && (
+                    <>
+                      <button
+                        className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={(e) => {
+                          setShowModalConfirm(true);
+                        }}
+                      >
+                        DELETE Task
+                      </button>
+                      <ConfirmModal
+                        showModalConfirm={showModalConfirm}
+                        setShowModalConfirm={setShowModalConfirm}
+                        setDeleteItem={setDeleteTask}
                       />
                     </>
                   )}
@@ -161,7 +187,7 @@ export default function Modal({
                       if (idModal === 1) {
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
-                        handleSubmitCard(e, listId);
+                        handleSubmitTask(e, listId);
                       } else if (idModal === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {

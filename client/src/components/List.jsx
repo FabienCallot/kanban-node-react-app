@@ -5,16 +5,17 @@ import Modal from './Modal';
 
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
-  const [showModalCreateTask, setShowModalCreateTask] = useState(false);
-  const [showModalEditList, setShowModalEditList] = useState(false);
-  const [showModalEditTask, setShowModalEditTask] = useState(false);
   const [refreshTask, setRefreshTask] = useState(false);
 
   useEffect(() => {
-    !showModalCreateTask && getAllTasksByListId(setTasksData, listId);
-    refreshTask && getAllTasksByListId(setTasksData, listId);
-    refreshTask && setRefreshTask(false);
-  }, [showModalCreateTask, listId, refreshTask, setRefreshList]);
+    getAllTasksByListId(setTasksData, listId);
+    if (refreshTask) {
+      getAllTasksByListId(setTasksData, listId);
+      setRefreshTask(false);
+    } else {
+      return;
+    }
+  }, [listId, refreshTask, setRefreshList]);
 
   return (
     <div
@@ -27,8 +28,7 @@ const List = ({ listId, listName, setRefreshList }) => {
             classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 hover:bg-[#373737] hover:border-none hover:scale-125 hover:rotate-90 transition duration-500 hover:duration-1500"
             title={'Create new task'}
             listId={listId}
-            showModal={showModalCreateTask}
-            setShowModal={setShowModalCreateTask}
+            setRefreshTask={setRefreshTask}
           />
         </>
         <h3 className="p-2 font-akaya mb-2 text-xl">{listName}</h3>
@@ -37,8 +37,6 @@ const List = ({ listId, listName, setRefreshList }) => {
           classNameButton={`${listId} edit-button`}
           title={'Edit list'}
           listId={listId}
-          showModal={showModalEditList}
-          setShowModal={setShowModalEditList}
           setRefreshList={setRefreshList}
         />
       </div>
@@ -48,15 +46,13 @@ const List = ({ listId, listName, setRefreshList }) => {
               .sort((a, b) => (a.id > b.id ? 1 : -1))
               .map((task) => (
                 <Task
+                  //for task
                   key={task.id}
                   name={task.description}
-                  idModal={4}
-                  classNameButtonModal={`${listId} edit-button`}
-                  titleModal={'Edit list'}
-                  listId={listId}
-                  showModal={showModalEditTask}
-                  setShowModal={setShowModalEditTask}
                   taskId={task.id}
+                  //modal in task
+                  listId={listId}
+                  titleModal={'Edit list'}
                   setRefreshTask={setRefreshTask}
                 />
               ))

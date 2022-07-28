@@ -25,43 +25,21 @@ function App() {
     getAllTags(setTagsData);
   }, []);
 
-  /**
-   * The function takes an event as an argument, and then sets the state of the listName variable to the
-   * value of the event
-   */
-  const handleListName = (event) => {
-    setListName(event.target.value);
-  };
 
-  /**
-   * A function that takes in an event and sets the card name to the value of the event.
-   */
-  const handleCardName = (event) => {
-    setCardName(event.target.value);
-  };
+  //TODO:  features in comming
+  // const handleTagName = (event) => {
+  //   setTagName(event.target.value);
+  // };
+  // const handleTagColor = (event) => {
+  //   setTagColor(event.target.value);
+  // };
+  // const handleSubmitTag = (event) => {
+  //   createOneTag(event, tagName, tagColor);
 
-  /**
-   * The function takes an event as an argument, and then sets the state of the tagName variable to the
-   * value of the event
-   */
-  const handleTagName = (event) => {
-    setTagName(event.target.value);
-  };
-
-  /**
-   * It sets the tag color to the value of the event target.
-   */
-  const handleTagColor = (event) => {
-    setTagColor(event.target.value);
-  };
-
-  const handleSubmitTag = (event) => {
-    createOneTag(event, tagName, tagColor);
-
-    setTimeout(() => {
-      getAllTags(setTagsData);
-    }, 200);
-  };
+  //   setTimeout(() => {
+  //     getAllTags(setTagsData);
+  //   }, 200);
+  // };
 
   return (
     <div className="text-[#FFFFFF] font-advent">
