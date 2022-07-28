@@ -4,12 +4,11 @@ import { FaPen } from 'react-icons/fa';
 import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
 import { updateOneCard } from '../Requests/updateOneTask';
+import { deleteOneList } from '../Requests/deleteOneList';
+import { deleteOneTask } from '../Requests/deleteOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
-import { deleteOneList } from '../Requests/deleteOneList';
 import ConfirmModal from './ConfirmModal';
-import { deleteOneCard } from '../Requests/deleteOneTask';
-
 
 export default function Modal({
   classNameButton,
@@ -63,22 +62,15 @@ export default function Modal({
         setRefreshList(true);
         setDeleteList(false);
       };
+      deleteList && handleDeleteList(e, listId);
+
       const handleDeleteTask = (e, id) => {
         deleteOneTask(e, id);
         setShowModal(false);
         setRefreshTask(true);
         setDeleteTask(false);
       };
-      deleteList && handleDeleteList(e, listId);
-
-      const handleDeleteTask = (e, id) => {
-        deleteOneCard(e, id);
-        setShowModal(false);
-        setRefreshTask(true);
-        setDeleteTask(false);
-      };
       deleteTask && handleDeleteTask(e, taskId);
-      
     },
     [
       deleteList,
@@ -89,7 +81,6 @@ export default function Modal({
       deleteTask,
       taskId,
       setRefreshTask,
-
     ]
   );
 
