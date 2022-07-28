@@ -10,6 +10,7 @@ import { deleteOneList } from '../Requests/deleteOneList';
 import ConfirmModal from './ConfirmModal';
 import { deleteOneCard } from '../Requests/deleteOneTask';
 
+
 export default function Modal({
   classNameButton,
   title,
@@ -62,6 +63,12 @@ export default function Modal({
         setRefreshList(true);
         setDeleteList(false);
       };
+      const handleDeleteTask = (e, id) => {
+        deleteOneTask(e, id);
+        setShowModal(false);
+        setRefreshTask(true);
+        setDeleteTask(false);
+      };
       deleteList && handleDeleteList(e, listId);
 
       const handleDeleteTask = (e, id) => {
@@ -71,6 +78,7 @@ export default function Modal({
         setDeleteTask(false);
       };
       deleteTask && handleDeleteTask(e, taskId);
+      
     },
     [
       deleteList,
@@ -81,6 +89,7 @@ export default function Modal({
       deleteTask,
       taskId,
       setRefreshTask,
+
     ]
   );
 
@@ -111,7 +120,7 @@ export default function Modal({
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
-                  {idModal === 3 && (
+                  {(idModal === 3 || idModal === 4) && (
                     <>
                       <button
                         className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -120,7 +129,6 @@ export default function Modal({
                           setShowModalConfirm(true);
                         }}
                       >
-                        {' '}
                         DELETE List
                       </button>
                       <ConfirmModal

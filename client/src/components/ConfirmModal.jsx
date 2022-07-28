@@ -1,6 +1,6 @@
 import { React } from 'react';
 
-export default function Modal({
+export default function ConfirmModal({
   setShowModalConfirm,
   setDeleteItem,
   showModalConfirm,
