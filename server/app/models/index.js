@@ -14,7 +14,7 @@ Card.belongsTo(List, {
   foreignKey: 'list_id',
 });
 
-Card.hasOne(Tag, {
+Card.belongsToMany(Tag, {
   as: 'tags',
   through: 'card_has_tag',
   foreignKey: 'card_id',
