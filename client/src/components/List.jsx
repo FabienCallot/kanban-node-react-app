@@ -47,7 +47,7 @@ const List = ({ listId, listName, setRefreshList }) => {
           setRefreshList={setRefreshList}
         />
       </div>
-      <div className={`list-tasks ${null}`}>
+      <div className="list-tasks">
         {tasksData
           ? tasksData
               .sort((a, b) => (a.id > b.id ? 1 : -1))

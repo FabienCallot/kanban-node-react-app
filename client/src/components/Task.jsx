@@ -14,7 +14,13 @@ const Task = ({
   return (
     <div
       id={taskId}
-      style={bgColor && { backgroundColor: `${bgColor}` }}
+      style={
+        // bgColor != null &&
+        {
+          backgroundColor: `${bgColor}`,
+        }
+        // : { backgroundColor: 'gray' }
+      }
       className={` bg-gray-500 flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`}
     >
       <p className="text-just leading-10">{name}</p>

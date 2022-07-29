@@ -7,7 +7,6 @@ import { updateOneTask } from '../Requests/updateOneTask';
 import { deleteOneList } from '../Requests/deleteOneList';
 import { deleteOneTask } from '../Requests/deleteOneTask';
 import { updateOneList } from '../Requests/updateOneList';
-import { associateTagToTask } from '../Requests/associateTagToTask';
 import Button from './Button';
 import ConfirmModal from './ConfirmModal';
 import DropDownMenu from './DropdownMenu';
@@ -77,9 +76,8 @@ export default function Modal({
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
     const color = handleTagColor();
-    const response = updateOneTask(id, cardName, color);
+    const response = updateOneTask(id, cardName, color ? color : null);
     response ? setShowModal(false) : console.log('error update task re-render');
-    response && associateTagToTask(event, id, selectedTag);
     setRefreshTask(true);
   };
 
