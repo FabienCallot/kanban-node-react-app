@@ -31,9 +31,9 @@ const Task = ({
         selectedTag={selectedTag}
         setSelectedTag={setSelectedTag}
         currentTaskName={name && name}
+        currentTaskColor={bgColor && bgColor}
       />
     </div>
   );
 };
-
 export default Task;
