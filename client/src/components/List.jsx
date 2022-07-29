@@ -26,25 +26,29 @@ const List = ({ listId, listName, setRefreshList }) => {
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
     >
       <div className="list-header flex justify-between items-center">
-        <>
-          <Modal
-            id={2}
-            classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 hover:bg-[#373737] hover:border-none hover:scale-125 hover:rotate-90 transition duration-500 hover:duration-1500"
-            title={'Create new task'}
-            listId={listId}
-            setRefreshTask={setRefreshTask}
-            tagsData={tagsData}
-            selectedTag={selectedTag}
-            setSelectedTag={setSelectedTag}
-          />
-        </>
-        <h3 className="p-2 font-akaya mb-2 text-xl">{listName}</h3>
+        <></>
+        <h3 className="p-2 font-akaya mb-2 text-2xl underline underline-offset-4 ml-20">
+          {listName}
+        </h3>
         <Modal
           id={3}
           classNameButton={`${listId} edit-button`}
           title={'Edit list'}
           listId={listId}
           setRefreshList={setRefreshList}
+        />
+      </div>
+      <div className="flex justify-center mt-4">
+        <p className="text-xl mr-4 mb-4">New Task</p>
+        <Modal
+          id={2}
+          classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 lg:hover:bg-[#373737] lg:hover:border-none lg:hover:scale-125 lg:hover:rotate-90 lg:transition lg:duration-500 lg:hover:duration-1500"
+          title={'Create new task'}
+          listId={listId}
+          setRefreshTask={setRefreshTask}
+          tagsData={tagsData}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
         />
       </div>
       <div className="list-tasks">
