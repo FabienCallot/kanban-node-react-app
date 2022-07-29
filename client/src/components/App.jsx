@@ -14,7 +14,20 @@ function App() {
 
   return (
     <div className="text-[#FFFFFF] font-advent">
-      {height < 20 ? <Header /> : <Header className=" opacity-20" />}
+      {height < 20 ? (
+        <Header
+          clickEvent={() => {
+            scrollToTop();
+          }}
+        />
+      ) : (
+        <Header
+          className=" opacity-20 hover:opacity-100 hover:transition-opacity duration-300"
+          clickEvent={() => {
+            scrollToTop();
+          }}
+        />
+      )}
       <Home />
       {height > 50 ? (
         <Button
