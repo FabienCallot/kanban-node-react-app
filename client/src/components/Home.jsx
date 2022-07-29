@@ -26,7 +26,7 @@ const Home = () => {
           <p className="text-3xl">New List</p>
           <Modal
             classNameButton=" list-header-button ml-2 border rounded w-8 h-8 lg:hover:bg-[#373737] lg:hover:border-none lg:hover:scale-125 lg:hover:rotate-90 lg:transition lg:duration-500 lg:hover:duration-1500"
-            id={1}
+            modalId={1}
             title={'Create new list'}
             setRefreshList={setRefreshList}
           />

@@ -20,20 +20,20 @@ const List = ({ listId, listName, setRefreshList }) => {
       return;
     }
   }, [listId, refreshTask, setRefreshList]);
-
   return (
     <div
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
     >
       <div className="list-header flex justify-between items-center">
-        <></>
-        <h3 className="p-2 font-akaya mb-2 text-2xl underline underline-offset-4 ml-20">
+        <div className="test"></div>
+        <h3 className="p-2 font-akaya mb-2 text-2xl underline underline-offset-4">
           {listName}
         </h3>
         <Modal
-          id={3}
+          modalId={3}
           classNameButton={`${listId} edit-button`}
           title={'Edit list'}
+          currentListName={listName}
           listId={listId}
           setRefreshList={setRefreshList}
         />
@@ -41,7 +41,7 @@ const List = ({ listId, listName, setRefreshList }) => {
       <div className="flex justify-center mt-4">
         <p className="text-xl mr-4 mb-4">New Task</p>
         <Modal
-          id={2}
+          modalId={2}
           classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 lg:hover:bg-[#373737] lg:hover:border-none lg:hover:scale-125 lg:hover:rotate-90 lg:transition lg:duration-500 lg:hover:duration-1500"
           title={'Create new task'}
           listId={listId}

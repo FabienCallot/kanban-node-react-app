@@ -21,7 +21,7 @@ const Task = ({
     >
       <p className="text-just leading-10">{name}</p>
       <Modal
-        id={4}
+        modalId={4}
         classNameButtonModal={`${taskId} edit-button`}
         title={'Edit task'}
         listId={listId}

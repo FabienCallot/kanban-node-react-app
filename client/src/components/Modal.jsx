@@ -14,7 +14,7 @@ import DropDownMenu from './DropdownMenu';
 export default function Modal({
   classNameButton,
   title,
-  id,
+  modalId,
   listId,
   setRefreshList,
   taskId,
@@ -23,6 +23,7 @@ export default function Modal({
   selectedTag,
   setSelectedTag,
   currentTaskName,
+  currentListName,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +31,6 @@ export default function Modal({
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
 
-  const idModal = id;
   const handleName = (event) => {
     setName(event.target.value);
   };
@@ -62,9 +62,13 @@ export default function Modal({
     setRefreshList(true);
   };
 
-  const handleUpdateListName = async (event, id, listName) => {
+  const handleUpdateListName = async (event, id, newListName) => {
     event.preventDefault();
-    const response = updateOneList(id, listName);
+    console.log(currentListName);
+    const response = updateOneList(
+      id,
+      newListName ? newListName : currentListName
+    );
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshList(true);
   };
@@ -121,7 +125,7 @@ export default function Modal({
       <Button
         className={`${classNameButton}`}
         text={
-          idModal === 1 || idModal === 2 ? (
+          modalId === 1 || modalId === 2 ? (
             <BsPlusLg className="mx-auto" />
           ) : (
             <FaPen className="mx-auto" />
@@ -134,14 +138,14 @@ export default function Modal({
       {showModal ? (
         <>
           <div
-            id={id}
+            id={modalId}
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-xl"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#262626] outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
-                  {idModal === 3 && (
+                  {modalId === 3 && (
                     <>
                       <button
                         className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -159,7 +163,7 @@ export default function Modal({
                       />
                     </>
                   )}
-                  {idModal === 4 && (
+                  {modalId === 4 && (
                     <>
                       <button
                         className="close bg-red-500 text-white active:bg-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -191,7 +195,7 @@ export default function Modal({
                     />
                   </label>
                 </form>
-                {(idModal === 2 || idModal === 4) && (
+                {(modalId === 2 || modalId === 4) && (
                   <DropDownMenu
                     tagsData={tagsData}
                     selectedTag={selectedTag}
@@ -211,20 +215,20 @@ export default function Modal({
                     className="close bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
                     onClick={(e) => {
-                      if (idModal === 1) {
+                      if (modalId === 1) {
                         handleSubmitList(e, name);
-                      } else if (idModal === 2) {
+                      } else if (modalId === 2) {
                         handleSubmitTask(e, listId, selectedTag);
                         setSelectedTag(null);
-                      } else if (idModal === 3) {
+                      } else if (modalId === 3) {
                         handleUpdateListName(e, listId, name);
-                      } else if (idModal === 4) {
+                      } else if (modalId === 4) {
                         handleUpdateTaskName(e, taskId, name);
                         setSelectedTag(null);
                       }
                     }}
                   >
-                    {idModal === 1 || idModal === 2 ? 'Create' : 'Update'}
+                    {modalId === 1 || modalId === 2 ? 'Create' : 'Update'}
                   </button>
                 </div>
               </div>
