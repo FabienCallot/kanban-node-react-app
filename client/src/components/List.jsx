@@ -22,8 +22,6 @@ const List = ({ listId, listName, setRefreshList }) => {
     }
   }, [listId, refreshTask, setRefreshList]);
 
-  //TODO: Make choice for color tags
-  console.log(tagsData);
   return (
     <div
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
@@ -60,6 +58,7 @@ const List = ({ listId, listName, setRefreshList }) => {
                   key={task.id}
                   name={task.description}
                   taskId={task.id}
+                  bgColor={task.color}
                   //modal in task
                   listId={listId}
                   titleModal={'Edit list'}

@@ -11,16 +11,13 @@ const Task = ({
   setSelectedTag,
   tagColor,
   setTagColor,
+  bgColor,
 }) => {
-  //console.log(tagColor);
   return (
     <div
       id={taskId}
-      className={
-        !tagColor
-          ? `bg-gray-500 flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`
-          : `bg-[${null}] flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`
-      }
+      style={bgColor && { backgroundColor: `${bgColor}` }}
+      className={` bg-gray-500 flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`}
     >
       <p className="text-just leading-10">{name}</p>
       <Modal

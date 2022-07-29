@@ -15,9 +15,11 @@ export default function DropDownMenu({
       <div>
         <Menu.Button
           style={
-            selectedTag && {
-              backgroundColor: `${tagsData[selectedTag - 1].color}`,
-            }
+            selectedTag
+              ? {
+                  backgroundColor: `${tagsData[selectedTag - 1].color}`,
+                }
+              : { backgroundColor: 'bg-gray-100' }
           }
           className={
             !selectedTag

@@ -1,9 +1,9 @@
 import { React, useState, useEffect } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { FaPen } from 'react-icons/fa';
-import { createOneCard } from '../Requests/createOneCard';
+import { createOneTask } from '../Requests/createOneTask';
 import { createOneList } from '../Requests/createOneList';
-import { updateOneCard } from '../Requests/updateOneTask';
+import { updateOneTask } from '../Requests/updateOneTask';
 import { deleteOneList } from '../Requests/deleteOneList';
 import { deleteOneTask } from '../Requests/deleteOneTask';
 import { updateOneList } from '../Requests/updateOneList';
@@ -49,35 +49,39 @@ export default function Modal({
     setRefreshList(true);
   };
   const handleSubmitTask = async (event, id) => {
-    //TODO: color tags
-    // let test = '';
-    // test = handleTagColor();
-    // console.log(test);
-    const response = await createOneCard(event, name, id);
+    const color = handleTagColor();
+    const response = await createOneTask(event, name, id, color);
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
   };
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
-    const response = updateOneCard(id, cardName);
+    const response = updateOneTask(id, cardName);
     response ? setShowModal(false) : console.log('error update task re-render');
     response && associateTagToTask(event, id, selectedTag);
-    //handleTagColor();
     setRefreshTask(true);
   };
 
   const handleTagColor = () => {
-    tagsData.map((tag) => {
-      const colors = tag.color;
-      let result = '';
-      if (selectedTag === tag.id) {
-        result = colors;
-        console.log(result);
-        return result;
-      } else {
-        return null;
-      }
-    });
+    const data =
+      tagsData &&
+      tagsData.map((tag) => {
+        const colors = tag.color;
+        let result = '';
+        if (selectedTag === tag.id) {
+          result = colors;
+          return result;
+        } else {
+          return null;
+        }
+      });
+
+    function removeNull(data) {
+      const filtered = data.filter((x) => x !== null);
+      return filtered.toString();
+    }
+    const finalResult = data && removeNull(data);
+    return finalResult;
   };
 
   useEffect(

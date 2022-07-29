@@ -1,4 +1,4 @@
-export async function updateOneCard(id, description) {
+export async function updateOneTask(id, description) {
   const data = new FormData();
   data.append('description', description);
 
