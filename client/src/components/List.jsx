@@ -9,7 +9,6 @@ const List = ({ listId, listName, setRefreshList }) => {
   const [refreshTask, setRefreshTask] = useState(false);
   const [tagsData, setTagsData] = useState(null);
   const [selectedTag, setSelectedTag] = useState(0);
-  const [tagColor, setTagColor] = useState('');
 
   useEffect(() => {
     getAllTags(setTagsData);
@@ -66,8 +65,6 @@ const List = ({ listId, listName, setRefreshList }) => {
                   tagsData={tagsData}
                   selectedTag={selectedTag}
                   setSelectedTag={setSelectedTag}
-                  tagColor={tagColor}
-                  setTagColor={setTagColor}
                 />
               ))
           : null}

@@ -9,8 +9,6 @@ const Task = ({
   tagsData,
   selectedTag,
   setSelectedTag,
-  tagColor,
-  setTagColor,
   bgColor,
 }) => {
   return (
@@ -30,8 +28,6 @@ const Task = ({
         tagsData={tagsData}
         selectedTag={selectedTag}
         setSelectedTag={setSelectedTag}
-        tagColor={tagColor}
-        setTagColor={setTagColor}
       />
     </div>
   );

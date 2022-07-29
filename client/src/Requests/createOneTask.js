@@ -1,6 +1,5 @@
 export async function createOneTask(event, description, id, color) {
   event.preventDefault();
-  console.log(`in fetch : ${color}`);
 
   const data = new FormData();
   data.append('description', description);

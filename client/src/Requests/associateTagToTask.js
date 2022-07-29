@@ -1,7 +1,6 @@
 export async function associateTagToTask(event, cardId, tagId) {
   event.preventDefault();
   const data = new FormData();
-  console.log(tagId);
   data.append('tag_id', tagId);
 
   const response = await fetch(
@@ -11,5 +10,5 @@ export async function associateTagToTask(event, cardId, tagId) {
       body: data,
     }
   );
-  return;
+  return response;
 }

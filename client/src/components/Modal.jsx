@@ -23,8 +23,6 @@ export default function Modal({
   tagsData,
   selectedTag,
   setSelectedTag,
-  tagColor,
-  setTagColor,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +34,28 @@ export default function Modal({
   const handleName = (event) => {
     setName(event.target.value);
   };
+
+  const handleTagColor = () => {
+    const data =
+      tagsData &&
+      tagsData.map((tag) => {
+        const colors = tag.color;
+        let result = '';
+        if (selectedTag === tag.id) {
+          result = colors;
+          return result;
+        } else {
+          return null;
+        }
+      });
+    const removeNull = (data) => {
+      const filtered = data.filter((x) => x !== null);
+      return filtered.toString();
+    };
+    const finalResult = data && removeNull(data);
+    return finalResult;
+  };
+
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name);
     response ? setShowModal(false) : console.log('error list re-render');
@@ -56,32 +76,11 @@ export default function Modal({
   };
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
-    const response = updateOneTask(id, cardName);
+    const color = handleTagColor();
+    const response = updateOneTask(id, cardName, color);
     response ? setShowModal(false) : console.log('error update task re-render');
     response && associateTagToTask(event, id, selectedTag);
     setRefreshTask(true);
-  };
-
-  const handleTagColor = () => {
-    const data =
-      tagsData &&
-      tagsData.map((tag) => {
-        const colors = tag.color;
-        let result = '';
-        if (selectedTag === tag.id) {
-          result = colors;
-          return result;
-        } else {
-          return null;
-        }
-      });
-
-    function removeNull(data) {
-      const filtered = data.filter((x) => x !== null);
-      return filtered.toString();
-    }
-    const finalResult = data && removeNull(data);
-    return finalResult;
   };
 
   useEffect(
@@ -164,6 +163,7 @@ export default function Modal({
                         type="button"
                         onClick={(e) => {
                           setShowModalConfirm(true);
+                          setSelectedTag(null);
                         }}
                       >
                         DELETE Task
@@ -212,10 +212,12 @@ export default function Modal({
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
                         handleSubmitTask(e, listId, selectedTag);
+                        setSelectedTag(null);
                       } else if (idModal === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {
                         handleUpdateTaskName(e, taskId, name);
+                        setSelectedTag(null);
                       }
                     }}
                   >

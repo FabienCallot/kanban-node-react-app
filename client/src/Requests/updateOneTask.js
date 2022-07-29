@@ -1,6 +1,7 @@
-export async function updateOneTask(id, description) {
+export async function updateOneTask(id, description, color) {
   const data = new FormData();
   data.append('description', description);
+  data.append('color', color);
 
   try {
     const response = await fetch(
