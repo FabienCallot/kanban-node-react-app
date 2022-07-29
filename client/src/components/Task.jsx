@@ -34,6 +34,7 @@ const Task = ({
         tagsData={tagsData}
         selectedTag={selectedTag}
         setSelectedTag={setSelectedTag}
+        currentTaskName={name && name}
       />
     </div>
   );

@@ -22,6 +22,7 @@ export default function Modal({
   tagsData,
   selectedTag,
   setSelectedTag,
+  currentTaskName,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -73,10 +74,14 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
   };
-  const handleUpdateTaskName = (event, id, cardName) => {
+  const handleUpdateTaskName = (event, id, newTaskName) => {
     event.preventDefault();
     const color = handleTagColor();
-    const response = updateOneTask(id, cardName, color ? color : null);
+    const response = updateOneTask(
+      id,
+      newTaskName ? newTaskName : currentTaskName,
+      color ? color : null
+    );
     response ? setShowModal(false) : console.log('error update task re-render');
     setRefreshTask(true);
   };
