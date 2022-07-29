@@ -11,5 +11,5 @@ export async function associateTagToTask(event, cardId, tagId) {
       body: data,
     }
   );
-  return console.log(response);
+  return;
 }

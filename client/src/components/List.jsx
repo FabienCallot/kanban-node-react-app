@@ -9,6 +9,7 @@ const List = ({ listId, listName, setRefreshList }) => {
   const [refreshTask, setRefreshTask] = useState(false);
   const [tagsData, setTagsData] = useState(null);
   const [selectedTag, setSelectedTag] = useState(0);
+  const [tagColor, setTagColor] = useState('');
 
   useEffect(() => {
     getAllTags(setTagsData);
@@ -22,7 +23,7 @@ const List = ({ listId, listName, setRefreshList }) => {
   }, [listId, refreshTask, setRefreshList]);
 
   //TODO: Make choice for color tags
-
+  console.log(tagsData);
   return (
     <div
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
@@ -49,7 +50,7 @@ const List = ({ listId, listName, setRefreshList }) => {
           setRefreshList={setRefreshList}
         />
       </div>
-      <div className="list-tasks">
+      <div className={`list-tasks ${null}`}>
         {tasksData
           ? tasksData
               .sort((a, b) => (a.id > b.id ? 1 : -1))
@@ -66,7 +67,8 @@ const List = ({ listId, listName, setRefreshList }) => {
                   tagsData={tagsData}
                   selectedTag={selectedTag}
                   setSelectedTag={setSelectedTag}
-                  tagColor={null}
+                  tagColor={tagColor}
+                  setTagColor={setTagColor}
                 />
               ))
           : null}

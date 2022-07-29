@@ -1,5 +1,7 @@
-export async function createOneCard(event, description, id) {
+export async function createOneCard(event, description, id, color) {
   event.preventDefault();
+  console.log(`in fetch : ${color}`);
+
   const data = new FormData();
   data.append('description', description);
   data.append('list_id', id);

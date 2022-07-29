@@ -10,6 +10,7 @@ const Task = ({
   selectedTag,
   setSelectedTag,
   tagColor,
+  setTagColor,
 }) => {
   //console.log(tagColor);
   return (
@@ -18,7 +19,7 @@ const Task = ({
       className={
         !tagColor
           ? `bg-gray-500 flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`
-          : `bg-[${tagColor.color}] flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`
+          : `bg-[${null}] flex justify-between px-4 py-1 mx-auto my-3 rounded text-center`
       }
     >
       <p className="text-just leading-10">{name}</p>
@@ -32,6 +33,8 @@ const Task = ({
         tagsData={tagsData}
         selectedTag={selectedTag}
         setSelectedTag={setSelectedTag}
+        tagColor={tagColor}
+        setTagColor={setTagColor}
       />
     </div>
   );

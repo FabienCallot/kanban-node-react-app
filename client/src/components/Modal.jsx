@@ -23,6 +23,8 @@ export default function Modal({
   tagsData,
   selectedTag,
   setSelectedTag,
+  tagColor,
+  setTagColor,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +49,10 @@ export default function Modal({
     setRefreshList(true);
   };
   const handleSubmitTask = async (event, id) => {
-    console.log(selectedTag);
+    //TODO: color tags
+    // let test = '';
+    // test = handleTagColor();
+    // console.log(test);
     const response = await createOneCard(event, name, id);
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
@@ -57,7 +62,22 @@ export default function Modal({
     const response = updateOneCard(id, cardName);
     response ? setShowModal(false) : console.log('error update task re-render');
     response && associateTagToTask(event, id, selectedTag);
+    //handleTagColor();
     setRefreshTask(true);
+  };
+
+  const handleTagColor = () => {
+    tagsData.map((tag) => {
+      const colors = tag.color;
+      let result = '';
+      if (selectedTag === tag.id) {
+        result = colors;
+        console.log(result);
+        return result;
+      } else {
+        return null;
+      }
+    });
   };
 
   useEffect(

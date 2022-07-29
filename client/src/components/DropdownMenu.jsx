@@ -14,12 +14,15 @@ export default function DropDownMenu({
     >
       <div>
         <Menu.Button
+          style={
+            selectedTag && {
+              backgroundColor: `${tagsData[selectedTag - 1].color}`,
+            }
+          }
           className={
             !selectedTag
               ? ` inline-flex justify-center items-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-1.5 bg-gray-100 text-m font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500`
-              : ` inline-flex justify-center items-center w-full rounded-md  shadow-sm px-4 py-1.5 bg-[${
-                  tagsData[selectedTag - 1].color
-                }] text-m font-semibold text-gray-100 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-indigo-500`
+              : ` inline-flex justify-center items-center w-full rounded-md  shadow-sm px-4 py-1.5 text-m font-semibold text-gray-100 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-indigo-500`
           }
         >
           {!selectedTag ? (
@@ -55,9 +58,10 @@ export default function DropDownMenu({
             {tagsData.map((tag) => (
               <Menu.Item key={tag.id}>
                 <button
+                  style={{ backgroundColor: `${tag.color}` }}
                   id={tag.id}
                   href="/"
-                  className={`bg-[${tag.color}] bg-[] 
+                  className={`
                        w-[95%] px-4 py-2 m-2 text-base text-gray-100 text-center rounded`}
                   onClick={() => {
                     setSelectedTag(tag.id);
