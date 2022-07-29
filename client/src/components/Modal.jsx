@@ -23,6 +23,7 @@ export default function Modal({
   selectedTag,
   setSelectedTag,
   currentTaskName,
+  currentTaskColor,
   currentListName,
 }) {
   const [name, setName] = useState(false);
@@ -84,7 +85,7 @@ export default function Modal({
     const response = updateOneTask(
       id,
       newTaskName ? newTaskName : currentTaskName,
-      color ? color : null
+      color ? color : currentTaskColor
     );
     response ? setShowModal(false) : console.log('error update task re-render');
     setRefreshTask(true);
