@@ -1,21 +1,19 @@
 BEGIN;
 
 INSERT INTO "tag" ("id", "name", "color") VALUES 
-(1, 'urgent', '#C340A1'),
-(2, 'current', '#00B294'),
-(3, 'bug', '#DA3A3A'),
-(4, 'process', '#3F88E4');
+(1, 'urgent', '#ff0000'),
+(2, 'bug', '#f0f');
 
 INSERT INTO "list" ("id", "name") VALUES
 (1, 'Backlog'),
 (2, 'In progress'),
 (3, 'Done');
 
-INSERT INTO "card" ("id", "description", "list_id", "color") VALUES
-(1, 'Chose à faire', 1, '#6b7280'),
-(2, 'Autre chose à faire', 1, '#6b7280'),
-(3, 'Chose en cours', 2, '#6b7280'),
-(4, 'Chose terminée', 3, '#6b7280');
+INSERT INTO "card" ("id", "description", "list_id") VALUES
+(1, 'Chose à faire', 1),
+(2, 'Autre chose à faire', 1),
+(3, 'Chose en cours', 2),
+(4, 'Chose terminée', 3);
 
 INSERT INTO "card_has_tag" ("card_id", "tag_id") VALUES
 (1,1),

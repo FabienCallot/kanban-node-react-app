@@ -1,15 +1,14 @@
 import { React, useState, useEffect } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { FaPen } from 'react-icons/fa';
-import { createOneTask } from '../Requests/createOneTask';
+import { createOneCard } from '../Requests/createOneCard';
 import { createOneList } from '../Requests/createOneList';
-import { updateOneTask } from '../Requests/updateOneTask';
+import { updateOneCard } from '../Requests/updateOneTask';
 import { deleteOneList } from '../Requests/deleteOneList';
 import { deleteOneTask } from '../Requests/deleteOneTask';
 import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import ConfirmModal from './ConfirmModal';
-import DropDownMenu from './DropdownMenu';
 
 export default function Modal({
   classNameButton,
@@ -19,9 +18,6 @@ export default function Modal({
   setRefreshList,
   taskId,
   setRefreshTask,
-  tagsData,
-  selectedTag,
-  setSelectedTag,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -30,31 +26,10 @@ export default function Modal({
   const [deleteTask, setDeleteTask] = useState(false);
 
   const idModal = id;
+
   const handleName = (event) => {
     setName(event.target.value);
   };
-
-  const handleTagColor = () => {
-    const data =
-      tagsData &&
-      tagsData.map((tag) => {
-        const colors = tag.color;
-        let result = '';
-        if (selectedTag === tag.id) {
-          result = colors;
-          return result;
-        } else {
-          return null;
-        }
-      });
-    const removeNull = (data) => {
-      const filtered = data.filter((x) => x !== null);
-      return filtered.toString();
-    };
-    const finalResult = data && removeNull(data);
-    return finalResult;
-  };
-
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name);
     response ? setShowModal(false) : console.log('error list re-render');
@@ -68,15 +43,13 @@ export default function Modal({
     setRefreshList(true);
   };
   const handleSubmitTask = async (event, id) => {
-    const color = handleTagColor();
-    const response = await createOneTask(event, name, id, color);
+    const response = await createOneCard(event, name, id);
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshTask(true);
   };
   const handleUpdateTaskName = (event, id, cardName) => {
     event.preventDefault();
-    const color = handleTagColor();
-    const response = updateOneTask(id, cardName, color ? color : null);
+    const response = updateOneCard(id, cardName);
     response ? setShowModal(false) : console.log('error update task re-render');
     setRefreshTask(true);
   };
@@ -133,7 +106,9 @@ export default function Modal({
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-xl"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#262626] outline-none focus:outline-none">
+                {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">{title}</h3>
                   {idModal === 3 && (
@@ -161,7 +136,6 @@ export default function Modal({
                         type="button"
                         onClick={(e) => {
                           setShowModalConfirm(true);
-                          setSelectedTag(null);
                         }}
                       >
                         DELETE Task
@@ -174,6 +148,7 @@ export default function Modal({
                     </>
                   )}
                 </div>
+                {/*body*/}
                 <form className="relative p-6 flex justify-between">
                   <label>
                     Name
@@ -186,13 +161,7 @@ export default function Modal({
                     />
                   </label>
                 </form>
-                {(idModal === 2 || idModal === 4) && (
-                  <DropDownMenu
-                    tagsData={tagsData}
-                    selectedTag={selectedTag}
-                    setSelectedTag={setSelectedTag}
-                  />
-                )}
+                {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -209,13 +178,11 @@ export default function Modal({
                       if (idModal === 1) {
                         handleSubmitList(e, name);
                       } else if (idModal === 2) {
-                        handleSubmitTask(e, listId, selectedTag);
-                        setSelectedTag(null);
+                        handleSubmitTask(e, listId);
                       } else if (idModal === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (idModal === 4) {
                         handleUpdateTaskName(e, taskId, name);
-                        setSelectedTag(null);
                       }
                     }}
                   >
