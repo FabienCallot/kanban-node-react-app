@@ -1,8 +1,5 @@
 BEGIN;
 
-INSERT INTO "user" ("id", "first_name", "last_name", "email", "password") VALUES 
-(1, 'Fabien', 'Callot', 'fab.callot@gmail.com', 'fab12345');
-
 INSERT INTO "tag" ("id", "name", "color") VALUES 
 (1, 'urgent', '#C340A1'),
 (2, 'current', '#00B294'),

@@ -17,7 +17,7 @@ const Home = () => {
       return;
     }
   }, [refreshList]);
-  console.log(listsData);
+
   return (
     <div className="home p-4 pt-20">
       <div className="home-header flex-col ">
