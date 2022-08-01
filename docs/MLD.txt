@@ -1,4 +1,6 @@
-Liste (id, nom, position)
+User  (id, email, first_name, last_name, password)
+Liste (id, nom, position, user_id)
 Carte (id, description, position, couleur, #Liste(id))
 Label (id, nom, couleur)
+
 Carte_a_Label (id, #Carte(id), #Label(id))
