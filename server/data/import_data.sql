@@ -1,5 +1,9 @@
 BEGIN;
 
+INSERT INTO "user" ("id", "email", "first_name", "last_name", "password") VALUES
+(1, 'fab.callot@gmail.com', 'Fab', 'Callot', 'fab12345');
+
+
 INSERT INTO "tag" ("id", "name", "color") VALUES 
 (1, 'urgent', '#C340A1'),
 (2, 'current', '#00B294'),

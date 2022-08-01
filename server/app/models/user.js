@@ -1,24 +1,21 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../client');
 
-class List extends Model {}
+class User extends Model {}
 
-List.init(
+User.init(
   {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
-    position: DataTypes.INTEGER,
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    color: DataTypes.TEXT,
   },
   {
     sequelize,
-    tableName: 'list',
+    tableName: 'user',
   }
 );
 
-module.exports = List;
+module.exports = User;
