@@ -5,9 +5,11 @@ import Header from './Header';
 import currentHeight from '../utils/currentHeight';
 import Button from './Button';
 import { scrollToTop } from '../utils/srollToTop';
+import Auth from './Auth';
 
 function App() {
   const [height, setHeight] = useState(0);
+  const [isLogged, setIsLogged] = useState(false);
   useEffect(() => {
     currentHeight(setHeight);
   }, []);
@@ -28,7 +30,8 @@ function App() {
           }}
         />
       )}
-      <Home />
+      {!isLogged ? <Auth /> : <Home />}
+
       {height > 50 ? (
         <Button
           clickEvent={() => {
