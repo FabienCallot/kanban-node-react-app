@@ -30,7 +30,11 @@ function App() {
           }}
         />
       )}
-      {!isLogged ? <Auth /> : <Home />}
+      {!isLogged ? (
+        <Auth isLogged={isLogged} setIsLogged={setIsLogged} />
+      ) : (
+        <Home />
+      )}
 
       {height > 50 ? (
         <Button
