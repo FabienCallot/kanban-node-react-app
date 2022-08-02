@@ -1,7 +1,7 @@
 export async function loginRequest(email, password) {
   const login = 'https://kanban-node-react-app.herokuapp.com/auth/login';
 
-  fetch(login, {
+  await fetch(login, {
     method: 'POST',
     headers: {
       Accept: 'application/json, text/plain, */*',
