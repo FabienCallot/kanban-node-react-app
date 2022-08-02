@@ -1,3 +1,5 @@
+import apiAxios from '.';
+
 export async function updateOneTask(id, description, color) {
   const filter = () => {
     let result = '';
@@ -16,20 +18,13 @@ export async function updateOneTask(id, description, color) {
   data.append('color', colorFiltered);
 
   try {
-    const response = await fetch(
-      `https://kanban-node-react-app.herokuapp.com/cards/${id}`,
-      {
-        method: 'PATCH',
-        body: data,
-      }
-    );
+    const response = await apiAxios.patch(`cards/${id}`, {
+      description: description,
+      color: colorFiltered,
+    });
 
-    if (response.status !== 200) {
-      const error = await response.json();
-      throw error;
-    }
-  } catch (error) {
-    alert('Impossible de modifier la card.');
-    console.error(error);
+    return response;
+  } catch (err) {
+    return console.log(err.response);
   }
 }

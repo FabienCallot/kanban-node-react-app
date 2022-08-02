@@ -1,17 +1,15 @@
+import apiAxios from '.';
+
 export async function createOneList(event, name) {
   event.preventDefault();
-  const data = new FormData();
-  data.append('name', name);
-  //TODO: 1 for the moment
-  data.append('user_id', 1);
+  try {
+    const response = await apiAxios.post('lists', {
+      name,
+      user_id: 1,
+    });
 
-  const response = await fetch(
-    'https://kanban-node-react-app.herokuapp.com/lists',
-    {
-      method: 'POST',
-      body: data,
-    }
-  );
-
-  return response;
+    return response;
+  } catch (err) {
+    return console.log(err.response);
+  }
 }

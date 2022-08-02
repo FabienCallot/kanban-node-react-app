@@ -10,7 +10,7 @@ import Auth from './Auth';
 
 function App() {
   const [height, setHeight] = useState(0);
-  const [isConnected, SetIsConnected] = useState(false); //Connected or not connected
+  const [isConnected, SetIsConnected] = useState(true); //Connected or not connected
   const [userData, SetUserData] = useState([]);
   useEffect(() => {
     currentHeight(setHeight);

@@ -15,8 +15,6 @@ app.use(cors({ origin: true }));
 
 // app.use(express.urlencoded({ extended: true }));
 
-app.use(bodySanitizer);
-
 /* This is telling Node to serve the files for the built React app. */
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
@@ -27,6 +25,8 @@ app.get('/api', (req, res) => {
 /* Parsing the body of the request. */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodySanitizer);
+
 app.use(router);
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

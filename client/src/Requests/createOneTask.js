@@ -1,3 +1,5 @@
+import apiAxios from '.';
+
 export async function createOneTask(event, description, id, color) {
   event.preventDefault();
 
@@ -6,12 +8,15 @@ export async function createOneTask(event, description, id, color) {
   data.append('list_id', id);
   data.append('color', color);
 
-  const response = await fetch(
-    `https://kanban-node-react-app.herokuapp.com/cards`,
-    {
-      method: 'POST',
-      body: data,
-    }
-  );
-  return response;
+  try {
+    const response = await apiAxios.post('cards', {
+      description: description,
+      list_id: id,
+      color: color,
+    });
+
+    return response;
+  } catch (err) {
+    return console.log(err.response);
+  }
 }

@@ -1,26 +1,16 @@
+import apiAxios from '.';
 
-export async function updateOneList( id, name) {
-  
+export async function updateOneList(id, name) {
   const data = new FormData();
   data.append('name', name);
 
-    try {
-        const response = await fetch(`https://kanban-node-react-app.herokuapp.com/lists/${id}`, {
-            method: 'PATCH',
-            body: data
-        });
+  try {
+    const response = await apiAxios.patch(`lists/${id}`, {
+      name: name,
+    });
 
-        if (response.status !== 200) {
-            const error = await response.json();
-            throw error;
-        } 
-    } catch (error) {
-        alert('Impossible de modifier la liste.');
-        console.error(error);
-    }
+    return response;
+  } catch (err) {
+    return console.log(err.response);
+  }
 }
-
-
-
-
-
