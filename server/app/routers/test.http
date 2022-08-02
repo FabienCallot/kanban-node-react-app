@@ -1,9 +1,0 @@
-
-@endpoint = http://localhost:3018
-
-
-### log in
-POST {{ endpoint }}/login
-content-type: application/x-www-form-urlencoded
-
-email=raf@raf.raf&password=rafifou
