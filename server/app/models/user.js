@@ -5,23 +5,12 @@ class User extends Model {}
 
 User.init(
   {
-    first_name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    email: {
+    name: {
       type: DataTypes.TEXT,
       allowNull: false,
       unique: true,
     },
-    password: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
+    color: DataTypes.TEXT,
   },
   {
     sequelize,
