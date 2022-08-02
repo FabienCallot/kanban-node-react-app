@@ -10,7 +10,7 @@ import Auth from './Auth';
 
 function App() {
   const [height, setHeight] = useState(0);
-  const [isConnected, SetIsConnected] = useState(true); //Connected or not connected
+  const [isConnected, SetIsConnected] = useState(false); //Connected or not connected
   const [userData, SetUserData] = useState([]);
   useEffect(() => {
     currentHeight(setHeight);
@@ -24,7 +24,7 @@ function App() {
       }
     }
   }, []);
-
+  const userId = userData.id;
   return (
     <div className="text-[#FFFFFF] font-advent">
       {!isConnected ? (
@@ -33,7 +33,7 @@ function App() {
           handleSetUserData={SetUserData}
         />
       ) : (
-        <Home />
+        <Home userId={userId} />
       )}
       {height < 20 ? (
         <Header

@@ -12,6 +12,7 @@ import ConfirmModal from './ConfirmModal';
 import DropDownMenu from './DropdownMenu';
 
 export default function Modal({
+  userId,
   classNameButton,
   title,
   modalId,
@@ -58,7 +59,7 @@ export default function Modal({
   };
 
   const handleSubmitList = async (event) => {
-    const response = await createOneList(event, name);
+    const response = await createOneList(event, name, userId);
     response ? setShowModal(false) : console.log('error list re-render');
     setRefreshList(true);
   };

@@ -3,10 +3,10 @@ import List from './List';
 import { getAllLists } from '../Requests/getAllLists';
 import Modal from './Modal';
 
-const Home = () => {
+const Home = ({ userId }) => {
   const [listsData, setListsData] = useState();
   const [refreshList, setRefreshList] = useState(false);
-
+  console.log(listsData);
   useEffect(() => {
     getAllLists(setListsData);
     refreshList && getAllLists(setListsData);
@@ -16,7 +16,7 @@ const Home = () => {
     } else {
       return;
     }
-  }, [refreshList]);
+  }, [refreshList, userId]);
 
   return (
     <div className="home p-4 pt-20">
@@ -29,6 +29,7 @@ const Home = () => {
             modalId={1}
             title={'Create new list'}
             setRefreshList={setRefreshList}
+            userId={userId}
           />
         </div>
       </div>
@@ -38,14 +39,17 @@ const Home = () => {
           ? 'loading'
           : listsData
               .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map((list) => (
-                <List
-                  key={list.id}
-                  listName={list.name}
-                  listId={list.id}
-                  setRefreshList={setRefreshList}
-                />
-              ))}
+              .map(
+                (list) =>
+                  list.user_id === userId && (
+                    <List
+                      key={list.id}
+                      listName={list.name}
+                      listId={list.id}
+                      setRefreshList={setRefreshList}
+                    />
+                  )
+              )}
       </div>
     </div>
   );
