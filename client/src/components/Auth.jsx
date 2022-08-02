@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { loginRequest } from '../Requests/loginRequest';
 import Button from './Button';
+import { setBearerToken } from '../Requests/index';
+import { Navigate } from 'react-router-dom';
 
-const Auth = (isLogged, setIsLogged) => {
+const Auth = (isLogged, setIsLogged, setUserData) => {
   const [logIn, SetLogIn] = useState(false);
   const [signIn, setSignIn] = useState(false);
   const [id, setId] = useState(0);
@@ -29,32 +32,36 @@ const Auth = (isLogged, setIsLogged) => {
   const handleConfirmPassword = (event) => {
     SetConfirmPasswordValue(event.target.value);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmitLogIn = async (event) => {
     event.preventDefault();
 
-    const response = await // TODO: make signinRequest
-    (lastNameValue,
-    firstNameValue,
-    emailValue,
-    passwordValue,
-    confirmPasswordValue);
+    const response = await loginRequest('test@test.com', 'fab12345');
 
     if (response.status !== 200) {
       SetErrorMessage(response.data.error);
-    }
-
-    if (response.status === 200) {
-      SetErrorMessage(false);
-      SetLastNameValue('');
-      SetFirstNameValue('');
       SetEmailValue('');
       SetPasswordValue('');
-      SetSuccesMessage(true);
-      setIsLogged(true); // TODO: with setTime out for message "Your account has been created, you will be redirected"
+    }
+    if (response.status === 200) {
+      console.log(response.data.token);
+      setIsLogged(true);
+      /* Setting the bearer token to the response data token and the response data new user. */
+      setBearerToken(
+        response.data.token,
+        JSON.stringify(response.data.newUser)
+      );
+      /* Setting the user data to the response data new user. It is also setting the password
+      value to an empty string. It is also setting the is logged to true. */
+      setUserData(response.data.newUser);
+      SetPasswordValue('');
+      setIsLogged(true);
+      /* Setting a timeout for 1.5 seconds. It is also navigating to the events page. */
+      setTimeout(() => {
+        Navigate('/');
+      }, 1500);
     }
   };
-  console.log(signIn);
-  console.log(logIn);
+  console.log(emailValue);
   return (
     <>
       {!signIn && !logIn ? (
@@ -88,7 +95,7 @@ const Auth = (isLogged, setIsLogged) => {
 
       {logIn || signIn ? (
         <div
-          className={`id={id} w-[100vw] h-[100vh] bg-black justify-center items-center flex`}
+          className={`id=${id} w-[100vw] h-[100vh] bg-black justify-center items-center flex`}
         >
           <div className="mt-20 sm:mt-0 w-[80%] sm:w-[50%] lg:w-[40%]">
             <div className="px-4 py-5 bg-[#262626] text-center text-2xl border-b border-solid border-slate-200 rounded-t-md">
@@ -96,12 +103,8 @@ const Auth = (isLogged, setIsLogged) => {
             </div>
 
             <form
-              action="/signin"
-              onSubmit={() => {
-                setSignIn(false);
-                SetLogIn(false);
-                setId(0);
-              }}
+              action="/auth/login"
+              onSubmit={handleSubmitLogIn}
               method="POST"
             >
               <div className="px-4 py-5 bg-[#262626] sm:p-6">
