@@ -25,7 +25,7 @@ function App() {
     }
   }, []);
 
-  console.log(logged);
+  //console.log(logged);
 
   return (
     <div className="text-[#FFFFFF] font-advent">

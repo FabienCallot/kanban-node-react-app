@@ -14,8 +14,6 @@ const Auth = (isLogged, setIsLogged, setUserData) => {
   const [emailValue, SetEmailValue] = useState(''); //recovery an email value
   const [passwordValue, SetPasswordValue] = useState(''); //recovery a password value
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState(''); //recovery a password confirm value
-  const [errorMessage, SetErrorMessage] = useState(''); //recovery a error message
-  const [succesMessage, SetSuccesMessage] = useState(false); //recovery a succes message
 
   const handleLastName = (event) => {
     SetLastNameValue(event.target.value);
@@ -38,30 +36,25 @@ const Auth = (isLogged, setIsLogged, setUserData) => {
     const response = await loginRequest('test@test.com', 'fab12345');
 
     if (response.status !== 200) {
-      SetErrorMessage(response.data.error);
+      console.log('error');
       SetEmailValue('');
       SetPasswordValue('');
     }
     if (response.status === 200) {
-      console.log(response.data.token);
-      setIsLogged(true);
-      /* Setting the bearer token to the response data token and the response data new user. */
+      console.log(response);
+      console.log(response.data);
+
       setBearerToken(
         response.data.token,
         JSON.stringify(response.data.newUser)
       );
-      /* Setting the user data to the response data new user. It is also setting the password
-      value to an empty string. It is also setting the is logged to true. */
+
       setUserData(response.data.newUser);
       SetPasswordValue('');
       setIsLogged(true);
-      /* Setting a timeout for 1.5 seconds. It is also navigating to the events page. */
-      setTimeout(() => {
-        Navigate('/');
-      }, 1500);
     }
   };
-  console.log(emailValue);
+
   return (
     <>
       {!signIn && !logIn ? (
@@ -103,7 +96,7 @@ const Auth = (isLogged, setIsLogged, setUserData) => {
             </div>
 
             <form
-              action="/auth/login"
+              action="auth/login"
               onSubmit={handleSubmitLogIn}
               method="POST"
             >

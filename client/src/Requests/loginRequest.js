@@ -1,15 +1,15 @@
-import apiAxios from './index';
-
 export async function loginRequest(email, password) {
-  console.log(email);
-  try {
-    const response = await apiAxios.post('/auth/login', {
-      email,
-      password,
-    });
+  const data = new FormData();
+  data.append('email', email);
+  data.append('password', password);
 
-    return response;
-  } catch (err) {
-    return err.response;
-  }
+  const response = await fetch(
+    'https://kanban-node-react-app.herokuapp.com/auth/login',
+    {
+      method: 'POST',
+      body: data,
+    }
+  );
+
+  return response;
 }
