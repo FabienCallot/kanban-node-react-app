@@ -10,31 +10,30 @@ import Auth from './Auth';
 
 function App() {
   const [height, setHeight] = useState(0);
-  const [logged, setIsLogged] = useState(false);
+  const [isConnected, SetIsConnected] = useState(false); //Connected or not connected
   const [userData, SetUserData] = useState([]);
   useEffect(() => {
     currentHeight(setHeight);
-
+    /* It checks if the user is already connected. */
     if (localStorage.getItem('user') !== null) {
       const responseLocalUser = JSON.parse(getLocalUser());
-      console.log(responseLocalUser);
+      //console.log(responseLocalUser);
       if (responseLocalUser) {
-        setIsLogged(true);
+        SetIsConnected(true);
         SetUserData(responseLocalUser);
       }
     }
   }, []);
 
-  //console.log(logged);
-
   return (
     <div className="text-[#FFFFFF] font-advent">
-      {!logged && (
+      {!isConnected ? (
         <Auth
-          logged={logged}
-          setIsLogged={setIsLogged}
-          setUserData={SetUserData}
+          handleSetIsConnected={SetIsConnected}
+          handleSetUserData={SetUserData}
         />
+      ) : (
+        <Home />
       )}
       {height < 20 ? (
         <Header
@@ -50,7 +49,6 @@ function App() {
           }}
         />
       )}
-      <Home />
       {height > 50 ? (
         <Button
           clickEvent={() => {

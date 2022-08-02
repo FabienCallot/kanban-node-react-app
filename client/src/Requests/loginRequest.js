@@ -1,30 +1,16 @@
-export async function loginRequest(email, password) {
-  const login = 'https://kanban-node-react-app.herokuapp.com/auth/login';
+import apiAxios from './index';
 
-  await fetch(login, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      // code here //
-      if (data.error) {
-        alert('Error Password or Username'); /*displays error message*/
-      } else {
-        window.open(
-          'target.html'
-        ); /*opens the target page while Id & password matches*/
-      }
-    })
-    .catch((err) => {
-      console.log(err);
+export async function loginRequest(event, email, password) {
+  event.preventDefault();
+
+  try {
+    const response = await apiAxios.post('auth/login', {
+      email,
+      password,
     });
+
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 }

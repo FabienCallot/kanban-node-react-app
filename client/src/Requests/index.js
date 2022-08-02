@@ -1,6 +1,6 @@
 import axios from 'axios';
 const apiAxios = axios.create({
-  baseURL: 'https://kanban-node-react-app.herokuapp.com/',
+  baseURL: 'http://localhost:3018/',
 });
 
 export default apiAxios;

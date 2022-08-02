@@ -65,7 +65,6 @@ export default function Modal({
 
   const handleUpdateListName = async (event, id, newListName) => {
     event.preventDefault();
-    console.log(currentListName);
     const response = updateOneList(
       id,
       newListName ? newListName : currentListName

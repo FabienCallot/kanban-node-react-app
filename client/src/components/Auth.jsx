@@ -4,7 +4,7 @@ import Button from './Button';
 import { setBearerToken } from '../Requests/index';
 import { Navigate } from 'react-router-dom';
 
-const Auth = (isLogged, setIsLogged, setUserData) => {
+const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [logIn, SetLogIn] = useState(false);
   const [signIn, setSignIn] = useState(false);
   const [id, setId] = useState(0);
@@ -32,26 +32,27 @@ const Auth = (isLogged, setIsLogged, setUserData) => {
   };
   const handleSubmitLogIn = async (event) => {
     event.preventDefault();
-
-    const response = await loginRequest('test@test.com', 'fab12345');
+    const response = await loginRequest(event, emailValue, passwordValue);
 
     if (response.status !== 200) {
-      console.log('error');
+      console.log(response);
+      console.log(response.data.error);
       SetEmailValue('');
       SetPasswordValue('');
     }
+
+    /*  */
     if (response.status === 200) {
-      console.log(response);
-      console.log(response.data);
+      console.log(response.data.token);
+      handleSetIsConnected(true);
 
       setBearerToken(
         response.data.token,
         JSON.stringify(response.data.newUser)
       );
-
-      setUserData(response.data.newUser);
+      handleSetUserData(response.data.newUser);
       SetPasswordValue('');
-      setIsLogged(true);
+      handleSetIsConnected(true);
     }
   };
 
