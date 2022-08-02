@@ -42,4 +42,4 @@ Tag.belongsToMany(Card, {
   otherKey: 'card_id',
 });
 
-module.exports = { Card, Tag, List };
+module.exports = { Card, Tag, List, User };
