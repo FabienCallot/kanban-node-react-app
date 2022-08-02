@@ -8,8 +8,7 @@ const path = require('path');
 const cors = require('cors');
 const bodySanitizer = require('./app/middlewares/bodySanitizer');
 /* This is telling Node to serve the files for the built React app. */
-//FIXME: try without this statc serve
-// app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.use(cors({ origin: true }));
 /* Parsing the body of the request. */
