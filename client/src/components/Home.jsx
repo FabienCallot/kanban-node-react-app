@@ -6,9 +6,9 @@ import Modal from './Modal';
 const Home = ({ userId }) => {
   const [listsData, setListsData] = useState();
   const [refreshList, setRefreshList] = useState(false);
-  console.log(listsData);
+
   useEffect(() => {
-    getAllLists(setListsData);
+    getAllLists(setListsData, userId);
     refreshList && getAllLists(setListsData);
     if (refreshList) {
       getAllLists(setListsData);

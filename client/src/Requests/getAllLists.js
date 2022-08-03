@@ -1,7 +1,21 @@
 import apiAxios from './index';
 
-export async function getAllLists(setData) {
-  const responses = await apiAxios.get('lists');
+const getAllLists = async (setListsData, userId) => {
+  const allLists = await apiAxios.get('lists');
 
-  return setData(responses.data);
-}
+  function FilteredLists(lists) {
+    let dataFiltered = [];
+
+    lists.forEach(async (list) => {
+      if (userId === list.user_id) {
+        dataFiltered.push(list);
+        setListsData(dataFiltered);
+        return;
+      }
+    });
+  }
+
+  FilteredLists(allLists.data);
+};
+
+export { getAllLists };

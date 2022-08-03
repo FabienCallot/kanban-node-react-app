@@ -32,10 +32,7 @@ function App() {
           handleSetIsConnected={SetIsConnected}
           handleSetUserData={SetUserData}
         />
-      ) : (
-        <Home userId={userId} />
-      )}
-      {height < 20 ? (
+      ) : height < 20 ? (
         <Header
           clickEvent={() => {
             scrollToTop();
@@ -49,6 +46,8 @@ function App() {
           }}
         />
       )}
+
+      <Home userId={userId} />
       {height > 50 ? (
         <Button
           clickEvent={() => {
