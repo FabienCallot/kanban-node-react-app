@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { loginRequest } from '../Requests/loginRequest';
 import Button from './Button';
 import { setBearerToken } from '../Requests/index';
-import { Navigate } from 'react-router-dom';
 
 const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [logIn, SetLogIn] = useState(false);
   const [signIn, setSignIn] = useState(false);
   const [id, setId] = useState(0);
-  /* A hook that allows us to use state in a functional component. */
-  const [lastNameValue, SetLastNameValue] = useState(''); //recovery a lastname value
-  const [firstNameValue, SetFirstNameValue] = useState(''); //recovery a firstname value
-  const [emailValue, SetEmailValue] = useState(''); //recovery an email value
-  const [passwordValue, SetPasswordValue] = useState(''); //recovery a password value
-  const [confirmPasswordValue, SetConfirmPasswordValue] = useState(''); //recovery a password confirm value
+  const [lastNameValue, SetLastNameValue] = useState('');
+  const [firstNameValue, SetFirstNameValue] = useState('');
+  const [emailValue, SetEmailValue] = useState('');
+  const [passwordValue, SetPasswordValue] = useState('');
+  const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
 
   const handleLastName = (event) => {
     SetLastNameValue(event.target.value);
@@ -105,7 +103,6 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
                 <div className="grid grid-cols-6 gap-4">
                   {id === 1 ? (
                     <>
-                      {' '}
                       <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="first-name"

@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "build": "cd client && yarn && yarn build"
+    "build": "cd client && yarn && npx tailwindcss -o build.css --minify && yarn build"
   },
   "name": "kanban-node-react-app",
   "version": "1.0.0",

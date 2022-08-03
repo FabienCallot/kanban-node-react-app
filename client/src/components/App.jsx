@@ -17,7 +17,6 @@ function App() {
     /* It checks if the user is already connected. */
     if (localStorage.getItem('user') !== null) {
       const responseLocalUser = JSON.parse(getLocalUser());
-      //console.log(responseLocalUser);
       if (responseLocalUser) {
         SetIsConnected(true);
         SetUserData(responseLocalUser);
