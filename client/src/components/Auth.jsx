@@ -36,8 +36,6 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
     const response = await loginRequest(event, emailValue, passwordValue);
 
     if (response.status !== 200) {
-      console.log(response);
-      console.log(response.data.error);
       SetEmailValue('');
       SetPasswordValue('');
       setIsLoading(false);
@@ -172,7 +170,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
                       Password
                     </label>
                     <input
-                      type="text"
+                      type="password"
                       name="password"
                       id="password"
                       onChange={handlePassword}
@@ -190,7 +188,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
                         Confirm password
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         name="confirm-password"
                         id="confirm-password"
                         onChange={handleConfirmPassword}
@@ -211,7 +209,9 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
                     ? 'Create'
                     : !loading && id === 2
                     ? 'Connect'
-                    : loading && <Spinner />}
+                    : loading && (
+                        <Spinner classNameSpinner=" block mr-auto ml-auto w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+                      )}
                 </button>
               </div>
             </form>

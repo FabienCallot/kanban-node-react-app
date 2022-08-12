@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import List from './List';
 import { getAllLists } from '../Requests/getAllLists';
 import Modal from './Modal';
+import Spinner from './Spinner';
 
 const Home = ({ userId }) => {
   const [listsData, setListsData] = useState();
@@ -17,7 +18,6 @@ const Home = ({ userId }) => {
       return;
     }
   }, [refreshList, userId]);
-
   return (
     <div className="home p-4 pt-20">
       <div className="home-header flex-col ">
@@ -33,23 +33,24 @@ const Home = ({ userId }) => {
           />
         </div>
       </div>
-
       <div className="home-lists flex items-start flex-wrap justify-between">
-        {!listsData
-          ? 'loading'
-          : listsData
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map(
-                (list) =>
-                  list.user_id === userId && (
-                    <List
-                      key={list.id}
-                      listName={list.name}
-                      listId={list.id}
-                      setRefreshList={setRefreshList}
-                    />
-                  )
-              )}
+        {!listsData ? (
+          <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+        ) : (
+          listsData
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map(
+              (list) =>
+                list.user_id === userId && (
+                  <List
+                    key={list.id}
+                    listName={list.name}
+                    listId={list.id}
+                    setRefreshList={setRefreshList}
+                  />
+                )
+            )
+        )}
       </div>
     </div>
   );

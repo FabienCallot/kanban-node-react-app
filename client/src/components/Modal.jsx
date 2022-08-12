@@ -247,7 +247,7 @@ export default function Modal({
                         handleUpdateTaskName(e, taskId, name);
                         setSelectedTag(null);
                       } else if (modalId === 5) {
-                        handleLogOut(e);
+                        handleLogOut();
                       }
                     }}
                   >
