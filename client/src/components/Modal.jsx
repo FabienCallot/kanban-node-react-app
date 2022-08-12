@@ -10,6 +10,8 @@ import { updateOneList } from '../Requests/updateOneList';
 import Button from './Button';
 import ConfirmModal from './ConfirmModal';
 import DropDownMenu from './DropdownMenu';
+import { CgProfile } from 'react-icons/cg';
+import { removeBearerToken } from '../Requests';
 
 export default function Modal({
   userId,
@@ -26,13 +28,13 @@ export default function Modal({
   currentTaskName,
   currentTaskColor,
   currentListName,
+  handleSetIsdisConnected,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
-
   const handleName = (event) => {
     setName(event.target.value);
   };
@@ -91,6 +93,13 @@ export default function Modal({
     setRefreshTask(true);
   };
 
+  const handleLogOut = () => {
+    removeBearerToken();
+    //FIXME: use state isConnected
+    window.location.reload(false);
+    setShowModal(false);
+  };
+
   useEffect(
     (e) => {
       const handleDeleteList = async (e, id) => {
@@ -128,8 +137,10 @@ export default function Modal({
         text={
           modalId === 1 || modalId === 2 ? (
             <BsPlusLg className="mx-auto" />
-          ) : (
+          ) : modalId === 3 || modalId === 4 ? (
             <FaPen className="mx-auto" />
+          ) : (
+            <CgProfile size={'2.5rem'} />
           )
         }
         clickEvent={() => {
@@ -184,18 +195,21 @@ export default function Modal({
                     </>
                   )}
                 </div>
-                <form className="relative p-6 flex justify-between">
-                  <label>
-                    Name
-                    <input
-                      className="ml-2 p-2 text-black font-semibold rounded"
-                      id="new-item-name"
-                      type="text"
-                      name={'name'}
-                      onChange={handleName}
-                    />
-                  </label>
-                </form>
+                {modalId === 5 ? null : (
+                  <form className="relative p-6 flex justify-between">
+                    <label>
+                      Name
+                      <input
+                        className="ml-2 p-2 text-black font-semibold rounded"
+                        id="new-item-name"
+                        type="text"
+                        name={'name'}
+                        onChange={handleName}
+                      />
+                    </label>
+                  </form>
+                )}
+
                 {(modalId === 2 || modalId === 4) && (
                   <DropDownMenu
                     tagsData={tagsData}
@@ -204,16 +218,22 @@ export default function Modal({
                   />
                 )}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Abort
-                  </button>
+                  {modalId === 5 ? null : (
+                    <button
+                      className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Abort
+                    </button>
+                  )}
                   <button
                     form="new-item-name"
-                    className="close bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className={
+                      modalId !== 5
+                        ? 'close bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                        : 'close bg-red-500 text-white content-center active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                    }
                     type="submit"
                     onClick={(e) => {
                       if (modalId === 1) {
@@ -226,10 +246,16 @@ export default function Modal({
                       } else if (modalId === 4) {
                         handleUpdateTaskName(e, taskId, name);
                         setSelectedTag(null);
+                      } else if (modalId === 5) {
+                        handleLogOut(e);
                       }
                     }}
                   >
-                    {modalId === 1 || modalId === 2 ? 'Create' : 'Update'}
+                    {modalId === 1 || modalId === 2
+                      ? 'Create'
+                      : modalId === 3 || modalId === 4
+                      ? 'Update'
+                      : 'Log out'}
                   </button>
                 </div>
               </div>

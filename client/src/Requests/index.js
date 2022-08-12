@@ -7,7 +7,6 @@ export default apiAxios;
 
 export function setBearerToken(token, user) {
   apiAxios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  console.log(apiAxios.defaults.headers.common.Authorization);
   localStorage.setItem('token', token);
   localStorage.setItem('user', user);
 }

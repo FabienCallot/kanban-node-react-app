@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { loginRequest } from '../Requests/loginRequest';
 import Button from './Button';
 import { setBearerToken } from '../Requests/index';
+import Spinner from './Spinner';
 
 const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [logIn, SetLogIn] = useState(false);
@@ -12,6 +13,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [emailValue, SetEmailValue] = useState('');
   const [passwordValue, SetPasswordValue] = useState('');
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
+  const [loading, setIsLoading] = useState(false);
 
   const handleLastName = (event) => {
     SetLastNameValue(event.target.value);
@@ -30,6 +32,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   };
   const handleSubmitLogIn = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const response = await loginRequest(event, emailValue, passwordValue);
 
     if (response.status !== 200) {
@@ -37,13 +40,10 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       console.log(response.data.error);
       SetEmailValue('');
       SetPasswordValue('');
-    }
-
-    /*  */
-    if (response.status === 200) {
-      console.log(response.data.token);
+      setIsLoading(false);
+      alert('Error login');
+    } else if (response.status === 200) {
       handleSetIsConnected(true);
-
       setBearerToken(
         response.data.token,
         JSON.stringify(response.data.newUser)
@@ -51,6 +51,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       handleSetUserData(response.data.newUser);
       SetPasswordValue('');
       handleSetIsConnected(true);
+      setIsLoading(false);
     }
   };
 
@@ -206,7 +207,11 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
                   type="submit"
                   className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-n font-semibold rounded-md bg-emerald-500 lg:hover:transform lg:hover:scale-125 lg:transition lg:duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {id === 1 ? 'Create' : 'Connect'}
+                  {!loading && id === 1
+                    ? 'Create'
+                    : !loading && id === 2
+                    ? 'Connect'
+                    : loading && <Spinner />}
                 </button>
               </div>
             </form>

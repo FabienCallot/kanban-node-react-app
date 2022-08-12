@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CgProfile } from 'react-icons/cg';
+import Modal from './Modal';
 
 const Header = ({ className, clickEvent }) => {
   return (
@@ -12,7 +12,11 @@ const Header = ({ className, clickEvent }) => {
         Kanban
       </Link>
       <div className="profil">
-        <CgProfile size={'2.5rem'} />
+        <Modal
+          classNameButton=" lg:hover:scale-125 lg:transition lg:duration-500"
+          modalId={5}
+          title={'Profil'}
+        />
       </div>
     </div>
   );
