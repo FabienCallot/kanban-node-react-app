@@ -66,6 +66,7 @@ export default function Modal({
     setRefreshList(true);
   };
 
+  //FIXME: pb with refresh list on delete list action.
   const handleUpdateListName = async (event, id, newListName) => {
     event.preventDefault();
     const response = updateOneList(

@@ -7,7 +7,6 @@ export default async function signInRequest(
   password,
   passwordConfirm
 ) {
-  console.log(firstname, lastname, email, password, passwordConfirm);
   try {
     const response = await apiAxios.post('auth/signin', {
       firstname,

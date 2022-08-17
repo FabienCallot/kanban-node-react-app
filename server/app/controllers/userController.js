@@ -18,9 +18,7 @@ const userController = {
       }
       /* validation of the email. */
       if (!emailValidator.validate(req.body.email)) {
-        return res
-          .status(401)
-          .json({ error: `L'email est invalide. Réessayez.` });
+        return res.status(401).json(`L'email est invalide. Réessayez.`);
       }
       /* Checking if the password and the password confirmation are the same. */
       if (req.body.password !== req.body.passwordConfirm) {

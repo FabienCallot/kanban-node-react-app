@@ -16,6 +16,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
   const [loading, setIsLoading] = useState(false);
   const [errorMessage, SetErrorMessage] = useState('');
+  const [succesMessage, SetSuccesMessage] = useState(false);
 
   const handleLastName = (event) => {
     SetLastNameValue(event.target.value);
@@ -47,7 +48,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
 
     if (response.status !== 200) {
       SetErrorMessage(response.data.error);
-      console.log(errorMessage);
+      alert(errorMessage);
       setIsLoading(false);
     } else if (response.status === 200) {
       SetErrorMessage(false);
@@ -57,13 +58,13 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       SetPasswordValue('');
       SetConfirmPasswordValue('');
       setIsLoading(false);
-      setId(2);
 
-      //SetSuccesMessage(true);
+      SetSuccesMessage(true);
       /* It's a function that redirects the user to the login page after 1.5 seconds. */
-      // setTimeout(() => {
-      //   navigate('/login');
-      // }, 1500);
+      setTimeout(() => {
+        setId(2);
+        SetSuccesMessage(false);
+      }, 1500);
     }
   };
 
@@ -129,129 +130,134 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
             <div className="px-4 py-5 bg-[#262626] text-center text-2xl border-b border-solid border-slate-200 rounded-t-md">
               {id === 1 ? 'SIGN IN' : 'Log in'}
             </div>
+            {succesMessage ? (
+              <p className="px-4 py-5 bg-[#262626] sm:p-6 text-2xl text-center text-white">
+                Account created
+              </p>
+            ) : (
+              <form
+                action="auth/login"
+                onSubmit={id === 1 ? handleSubmitSignIn : handleSubmitLogIn}
+                method="POST"
+              >
+                <div className="px-4 py-5 bg-[#262626] sm:p-6">
+                  <div className="grid grid-cols-6 gap-4">
+                    {id === 1 ? (
+                      <>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="first-name"
+                            className="block text-lg font-semibold "
+                          >
+                            First name
+                          </label>
+                          <input
+                            type="text"
+                            name="first-name"
+                            id="first-name"
+                            value={firstNameValue}
+                            onChange={handleFirstName}
+                            autoComplete="given-name"
+                            className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="last-name"
+                            className="block text-lg font-semibold "
+                          >
+                            Last name
+                          </label>
+                          <input
+                            type="text"
+                            name="last-name"
+                            id="last-name"
+                            value={lastNameValue}
+                            onChange={handleLastName}
+                            autoComplete="family-name"
+                            className="mt-1 min-h-[2rem]  text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                      </>
+                    ) : null}
 
-            <form
-              action="auth/login"
-              onSubmit={id === 1 ? handleSubmitSignIn : handleSubmitLogIn}
-              method="POST"
-            >
-              <div className="px-4 py-5 bg-[#262626] sm:p-6">
-                <div className="grid grid-cols-6 gap-4">
-                  {id === 1 ? (
-                    <>
-                      <div className="col-span-6 sm:col-span-3">
-                        <label
-                          htmlFor="first-name"
-                          className="block text-lg font-semibold "
-                        >
-                          First name
-                        </label>
-                        <input
-                          type="text"
-                          name="first-name"
-                          id="first-name"
-                          value={firstNameValue}
-                          onChange={handleFirstName}
-                          autoComplete="given-name"
-                          className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                      <div className="col-span-6 sm:col-span-3">
-                        <label
-                          htmlFor="last-name"
-                          className="block text-lg font-semibold "
-                        >
-                          Last name
-                        </label>
-                        <input
-                          type="text"
-                          name="last-name"
-                          id="last-name"
-                          value={lastNameValue}
-                          onChange={handleLastName}
-                          autoComplete="family-name"
-                          className="mt-1 min-h-[2rem]  text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </>
-                  ) : null}
-
-                  <div className="col-span-6 sm:col-span-6">
-                    <label
-                      htmlFor="email-address"
-                      className="block text-lg font-semibold "
-                    >
-                      Email address
-                    </label>
-                    <input
-                      type="text"
-                      name="email-address"
-                      id="email-address"
-                      onChange={handleEmail}
-                      value={emailValue}
-                      autoComplete="email"
-                      className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div
-                    className={
-                      id === 1
-                        ? 'col-span-6 sm:col-span-3'
-                        : 'col-span-6 sm:col-span-6'
-                    }
-                  >
-                    <label
-                      htmlFor="password"
-                      className="block text-lg font-semibold "
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      onChange={handlePassword}
-                      value={passwordValue}
-                      autoComplete="password"
-                      className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-                  {id === 1 ? (
-                    <div className="col-span-6 sm:col-span-3">
+                    <div className="col-span-6 sm:col-span-6">
                       <label
-                        htmlFor="confirm-password"
+                        htmlFor="email-address"
                         className="block text-lg font-semibold "
                       >
-                        Confirm password
+                        Email address
                       </label>
                       <input
-                        type="password"
-                        name="confirm-password"
-                        id="confirm-password"
-                        onChange={handleConfirmPassword}
-                        value={confirmPasswordValue}
-                        autoComplete="confirm-password"
+                        type="text"
+                        name="email-address"
+                        id="email-address"
+                        onChange={handleEmail}
+                        value={emailValue}
+                        autoComplete="email"
                         className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
-                  ) : null}
+                    <div
+                      className={
+                        id === 1
+                          ? 'col-span-6 sm:col-span-3'
+                          : 'col-span-6 sm:col-span-6'
+                      }
+                    >
+                      <label
+                        htmlFor="password"
+                        className="block text-lg font-semibold "
+                      >
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        onChange={handlePassword}
+                        value={passwordValue}
+                        autoComplete="password"
+                        className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                    {id === 1 ? (
+                      <div className="col-span-6 sm:col-span-3">
+                        <label
+                          htmlFor="confirm-password"
+                          className="block text-lg font-semibold "
+                        >
+                          Confirm password
+                        </label>
+                        <input
+                          type="password"
+                          name="confirm-password"
+                          id="confirm-password"
+                          onChange={handleConfirmPassword}
+                          value={confirmPasswordValue}
+                          autoComplete="confirm-password"
+                          className="mt-1 min-h-[2rem] text-black font-semibold focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-              <div className="px-4 py-3 bg-[#262626] text-right sm:px-6 rounded-b-md">
-                <button
-                  type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-n font-semibold rounded-md bg-emerald-500 lg:hover:transform lg:hover:scale-125 lg:transition lg:duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  {!loading && id === 1
-                    ? 'Create'
-                    : !loading && id === 2
-                    ? 'Connect'
-                    : loading && (
-                        <Spinner classNameSpinner=" block mr-auto ml-auto w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
-                      )}
-                </button>
-              </div>
-            </form>
+                <div className="px-4 py-3 bg-[#262626] text-right sm:px-6 rounded-b-md">
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-n font-semibold rounded-md bg-emerald-500 lg:hover:transform lg:hover:scale-125 lg:transition lg:duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    {!loading && id === 1
+                      ? 'Create'
+                      : !loading && id === 2
+                      ? 'Connect'
+                      : loading && (
+                          <Spinner classNameSpinner=" block mr-auto ml-auto w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+                        )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       ) : null}
