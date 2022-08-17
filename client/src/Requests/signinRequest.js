@@ -1,18 +1,15 @@
 import axios from 'axios';
 
-const apiAxios = axios.create({
-  baseURL: 'http://localhost:3001',
-});
-
-export async function signinRequest(
+export default async function signInRequest(
   firstname,
   lastname,
   email,
   password,
   passwordConfirm
 ) {
+  console.log(firstname, lastname, email, password, passwordConfirm);
   try {
-    const response = await apiAxios.post('/signin', {
+    const response = await axios.post('auth/signin', {
       firstname,
       lastname,
       email,
