@@ -3,7 +3,7 @@ import { loginRequest } from '../Requests/loginRequest';
 import Button from './Button';
 import { setBearerToken } from '../Requests/index';
 import Spinner from './Spinner';
-import signInRequest from '../Requests/signInRequest';
+import signInRequest from '../Requests/signinRequest';
 
 const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [logIn, SetLogIn] = useState(false);
