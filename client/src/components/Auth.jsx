@@ -3,6 +3,7 @@ import { loginRequest } from '../Requests/loginRequest';
 import Button from './Button';
 import { setBearerToken } from '../Requests/index';
 import Spinner from './Spinner';
+import signInRequest from '../Requests/signInRequest';
 
 const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [logIn, SetLogIn] = useState(false);
@@ -14,6 +15,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const [passwordValue, SetPasswordValue] = useState('');
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
   const [loading, setIsLoading] = useState(false);
+  const [errorMessage, SetErrorMessage] = useState('');
 
   const handleLastName = (event) => {
     SetLastNameValue(event.target.value);
@@ -30,6 +32,40 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const handleConfirmPassword = (event) => {
     SetConfirmPasswordValue(event.target.value);
   };
+  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+  const handleSubmitSignIn = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const response = await signInRequest(
+      firstNameValue,
+      lastNameValue,
+      emailValue,
+      passwordValue,
+      confirmPasswordValue
+    );
+
+    if (response.status !== 200) {
+      SetErrorMessage(response.data.error);
+      console.log(errorMessage);
+      setIsLoading(false);
+    } else if (response.status === 200) {
+      SetErrorMessage(false);
+      SetFirstNameValue('');
+      SetLastNameValue('');
+      SetEmailValue('');
+      SetPasswordValue('');
+      confirmPasswordValue('');
+      setIsLoading(false);
+
+      //SetSuccesMessage(true);
+      /* It's a function that redirects the user to the login page after 1.5 seconds. */
+      // setTimeout(() => {
+      //   navigate('/login');
+      // }, 1500);
+    }
+  };
+
   const handleSubmitLogIn = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -95,7 +131,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
 
             <form
               action="auth/login"
-              onSubmit={handleSubmitLogIn}
+              onSubmit={id === 1 ? handleSubmitSignIn : handleSubmitLogIn}
               method="POST"
             >
               <div className="px-4 py-5 bg-[#262626] sm:p-6">

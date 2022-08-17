@@ -33,23 +33,26 @@ const Home = ({ userId }) => {
           />
         </div>
       </div>
-      <div className="home-lists flex items-start flex-wrap justify-between">
+
+      <div>
         {!listsData ? (
           <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
         ) : (
-          listsData
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map(
-              (list) =>
-                list.user_id === userId && (
-                  <List
-                    key={list.id}
-                    listName={list.name}
-                    listId={list.id}
-                    setRefreshList={setRefreshList}
-                  />
-                )
-            )
+          <div className="home-lists flex items-start flex-wrap justify-between">
+            {listsData
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map(
+                (list) =>
+                  list.user_id === userId && (
+                    <List
+                      key={list.id}
+                      listName={list.name}
+                      listId={list.id}
+                      setRefreshList={setRefreshList}
+                    />
+                  )
+              )}
+          </div>
         )}
       </div>
     </div>

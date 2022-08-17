@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 const userController = {
   async signinAction(req, res) {
+    console.log(req.body);
     try {
       // /* validation of the email. */
       const user = await User.findOne({

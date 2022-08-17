@@ -3,6 +3,7 @@ import { getAllTasksByListId } from '../Requests/getAllTasksByListId';
 import { getAllTags } from '../Requests/getAllTags';
 import Task from './Task';
 import Modal from './Modal';
+import Spinner from './Spinner';
 
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
@@ -52,26 +53,28 @@ const List = ({ listId, listName, setRefreshList }) => {
         />
       </div>
       <div className="list-tasks">
-        {tasksData
-          ? tasksData
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map((task) => (
-                <Task
-                  //for task
-                  key={task.id}
-                  name={task.description}
-                  taskId={task.id}
-                  bgColor={task.color}
-                  //modal in task
-                  listId={listId}
-                  titleModal={'Edit list'}
-                  setRefreshTask={setRefreshTask}
-                  tagsData={tagsData}
-                  selectedTag={selectedTag}
-                  setSelectedTag={setSelectedTag}
-                />
-              ))
-          : null}
+        {tasksData ? (
+          tasksData
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((task) => (
+              <Task
+                //for task
+                key={task.id}
+                name={task.description}
+                taskId={task.id}
+                bgColor={task.color}
+                //modal in task
+                listId={listId}
+                titleModal={'Edit list'}
+                setRefreshTask={setRefreshTask}
+                tagsData={tagsData}
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+              />
+            ))
+        ) : (
+          <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+        )}
       </div>
     </div>
   );
