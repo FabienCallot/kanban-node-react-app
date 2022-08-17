@@ -55,8 +55,9 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       SetLastNameValue('');
       SetEmailValue('');
       SetPasswordValue('');
-      confirmPasswordValue('');
+      SetConfirmPasswordValue('');
       setIsLoading(false);
+      setId(2);
 
       //SetSuccesMessage(true);
       /* It's a function that redirects the user to the login page after 1.5 seconds. */
