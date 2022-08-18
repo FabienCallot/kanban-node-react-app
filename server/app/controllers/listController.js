@@ -42,18 +42,18 @@ const listController = {
           name: req.body.name,
         },
       });
-      const newList = await List.create(req.body, {
-        silent: true,
-      });
+
       console.log(`Ceci est la liste : ${list}`);
 
       if (list) {
         return res.status(401).json({
           error: 'list already exist',
         });
-      } else {
-        res.json(newList);
       }
+      const newList = await List.create(req.body, {
+        silent: true,
+      });
+      res.json(newList);
     } catch (err) {
       next(err);
     }
