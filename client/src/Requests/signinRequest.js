@@ -1,4 +1,4 @@
-import apiAxios from './index';
+import axios from 'axios';
 
 export default async function signInRequest(
   firstname,
@@ -8,7 +8,7 @@ export default async function signInRequest(
   passwordConfirm
 ) {
   try {
-    const response = await apiAxios.post('auth/signin', {
+    const response = await axios.post('auth/signin', {
       firstname,
       lastname,
       email,
