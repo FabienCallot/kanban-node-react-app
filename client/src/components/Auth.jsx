@@ -56,16 +56,14 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       SetLastNameValue('');
       SetEmailValue('');
       SetPasswordValue('');
-      confirmPasswordValue('');
+      SetConfirmPasswordValue('');
       setIsLoading(false);
-
       SetSuccesMessage(true);
-      /* It's a function that redirects the user to the login page after 1.5 seconds. */
       setTimeout(() => {
-        setId(2);
-        SetSuccesMessage(false);
+        handleSubmitLogIn(event);
       }, 1500);
     }
+    SetSuccesMessage(false);
   };
 
   const handleSubmitLogIn = async (event) => {

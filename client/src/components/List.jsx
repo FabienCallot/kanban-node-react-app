@@ -73,7 +73,7 @@ const List = ({ listId, listName, setRefreshList }) => {
               />
             ))
         ) : (
-          <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+          <Spinner classNameSpinner=" block mr-auto ml-auto w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
         )}
       </div>
     </div>

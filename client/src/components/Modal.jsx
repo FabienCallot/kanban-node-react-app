@@ -35,6 +35,7 @@ export default function Modal({
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
+
   const handleName = (event) => {
     setName(event.target.value);
   };
@@ -62,7 +63,7 @@ export default function Modal({
 
   const handleSubmitList = async (event) => {
     const response = await createOneList(event, name, userId);
-    response ? setShowModal(false) : console.log('error list re-render');
+    response ? setShowModal(false) : alert('List already exist');
     setRefreshList(true);
   };
 
@@ -76,6 +77,7 @@ export default function Modal({
     response ? setShowModal(false) : console.log('error task re-render');
     setRefreshList(true);
   };
+
   const handleSubmitTask = async (event, id) => {
     const color = handleTagColor();
     const response = await createOneTask(event, name, id, color);
