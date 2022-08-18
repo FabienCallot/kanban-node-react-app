@@ -40,9 +40,10 @@ const listController = {
       const list = await List.findOne({
         where: {
           name: req.body.name,
-          user_id: req.body.user_id,
         },
       });
+
+      console.log(`Ceci est la liste : ${list}`);
 
       if (list) {
         return res.status(401).json({
