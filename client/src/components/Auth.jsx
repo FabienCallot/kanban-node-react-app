@@ -56,7 +56,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       SetLastNameValue('');
       SetEmailValue('');
       SetPasswordValue('');
-      SetConfirmPasswordValue('');
+      confirmPasswordValue('');
       setIsLoading(false);
 
       SetSuccesMessage(true);
