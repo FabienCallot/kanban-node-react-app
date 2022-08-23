@@ -27,7 +27,7 @@
   "author": "FabienCallot <fab.callot@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "16.17.0",
+    "node": "16.15.0",
     "yarn": "1.22.19"
   }
 }
