@@ -49,6 +49,7 @@ const userController = {
 
   /* We are trying to recover the user who has a given email. */
   async loginAction(req, res) {
+    console.log(req.body);
     try {
       const user = await User.findOne({
         where: {

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
 import { useEffect, useState } from 'react';
 import Home from './Home';
 import Header from './Header';
@@ -7,11 +7,15 @@ import Button from './Button';
 import { getLocalUser } from '../Requests/index';
 import { scrollToTop } from '../utils/srollToTop';
 import Auth from './Auth';
+import { createListsFirstCo } from '../Requests/createListsFirstCo';
 
 function App() {
   const [height, setHeight] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
   const [userData, SetUserData] = useState([]);
+  const [firstCo, setFirstCo] = useState(false);
+
+  //console.log(firstCo);
 
   useEffect(() => {
     currentHeight(setHeight);
@@ -28,12 +32,24 @@ function App() {
     }
   }, []);
   const userId = userData.id;
+
+  const firstCoList = async () => {
+    await createListsFirstCo('Backlog', userId);
+    setTimeout(() => {
+      setFirstCo(false);
+    }, 5000);
+    return;
+  };
+  firstCo && firstCoList();
+
   return (
     <div className="text-[#FFFFFF] font-advent">
       {!isConnected ? (
         <Auth
           handleSetIsConnected={setIsConnected}
           handleSetUserData={SetUserData}
+          handleFirstCo={setFirstCo}
+          setFirstCo={setFirstCo}
         />
       ) : (
         <>
@@ -42,7 +58,7 @@ function App() {
               scrollToTop();
             }}
           />
-          <Home userId={userId} />
+          <Home userId={userId} firstCo={firstCo} />
         </>
       )}
       {height > 50 ? (
@@ -58,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);

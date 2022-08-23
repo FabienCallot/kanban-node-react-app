@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import List from './List';
 import { getAllLists } from '../Requests/getAllLists';
 import Modal from './Modal';
@@ -9,13 +10,13 @@ const Home = ({ userId }) => {
   const [refreshList, setRefreshList] = useState(false);
   const [delayOut, setDelayOut] = useState(false);
 
-  const teeest = () => {
+  const delay = () => {
     !listsData &&
       setTimeout(() => {
         setDelayOut(true);
       }, 3000);
   };
-  teeest();
+  delay();
 
   useEffect(() => {
     getAllLists(setListsData, userId);
@@ -27,6 +28,10 @@ const Home = ({ userId }) => {
       return;
     }
   }, [refreshList, userId]);
+
+  // firstCo && createListsFirstCo('Backlog', userId);
+  // firstCo && createListsFirstCo('In Progress', userId);
+  // firstCo && createListsFirstCo('Done', userId);
 
   return (
     <div className="home p-4 pt-20">
@@ -71,4 +76,4 @@ const Home = ({ userId }) => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

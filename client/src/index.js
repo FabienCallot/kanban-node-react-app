@@ -7,10 +7,8 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
-      <Routes>
-        <Route path="/" element={<App />} />
-      </Routes>
-    </React.StrictMode>
+    <Routes>
+      <Route path="/" element={<App />} />
+    </Routes>
   </BrowserRouter>
 );
