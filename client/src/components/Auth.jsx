@@ -5,7 +5,7 @@ import { setBearerToken } from '../Requests/index';
 import Spinner from './Spinner';
 import signInRequest from '../Requests/signinRequest';
 
-const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
+const Auth = ({ handleSetIsConnected, handleSetUserData, handleFirstCo }) => {
   const [logIn, SetLogIn] = useState(false);
   const [signIn, setSignIn] = useState(false);
   const [id, setId] = useState(0);
@@ -33,7 +33,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
   const handleConfirmPassword = (event) => {
     SetConfirmPasswordValue(event.target.value);
   };
-  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
   const handleSubmitSignIn = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -64,6 +64,7 @@ const Auth = ({ handleSetIsConnected, handleSetUserData }) => {
       }, 1500);
     }
     SetSuccesMessage(false);
+    handleFirstCo(true);
   };
 
   const handleSubmitLogIn = async (event) => {
