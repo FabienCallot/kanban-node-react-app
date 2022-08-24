@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "build": "yarn build"
+    "build": "yarn"
   },
   "name": "kanban-node-react-app",
   "version": "1.0.0",
