@@ -57,11 +57,11 @@ const Auth = ({ handleSetIsConnected, handleSetUserData, handleFirstCo }) => {
       SetEmailValue('');
       SetPasswordValue('');
       SetConfirmPasswordValue('');
-      setIsLoading(false);
       SetSuccesMessage(true);
       setTimeout(() => {
         handleSubmitLogIn(event);
       }, 1500);
+      setIsLoading(false);
     }
     SetSuccesMessage(false);
     handleFirstCo(true);
@@ -241,7 +241,17 @@ const Auth = ({ handleSetIsConnected, handleSetUserData, handleFirstCo }) => {
                     ) : null}
                   </div>
                 </div>
-                <div className="px-4 py-3 bg-[#262626] text-right sm:px-6 rounded-b-md">
+                <div className="flex justify-between px-4 py-3 bg-[#262626] text-right sm:px-6 rounded-b-md">
+                  <button
+                    onClick={() => {
+                      setSignIn(false);
+                      SetLogIn(false);
+                    }}
+                    type="button"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-n font-semibold rounded-md bg-red-500 lg:hover:transform lg:hover:scale-125 lg:transition lg:duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    abort
+                  </button>
                   <button
                     type="submit"
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-n font-semibold rounded-md bg-emerald-500 lg:hover:transform lg:hover:scale-125 lg:transition lg:duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

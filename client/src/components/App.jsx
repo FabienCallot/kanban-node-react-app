@@ -42,12 +42,19 @@ function App() {
   return (
     <div className="text-[#FFFFFF] font-advent">
       {!isConnected ? (
-        <Auth
-          handleSetIsConnected={setIsConnected}
-          handleSetUserData={SetUserData}
-          handleFirstCo={setFirstCo}
-          setFirstCo={setFirstCo}
-        />
+        <>
+          <Header
+            clickEvent={() => {
+              scrollToTop();
+            }}
+          />
+          <Auth
+            handleSetIsConnected={setIsConnected}
+            handleSetUserData={SetUserData}
+            handleFirstCo={setFirstCo}
+            setFirstCo={setFirstCo}
+          />
+        </>
       ) : (
         <>
           <Header
