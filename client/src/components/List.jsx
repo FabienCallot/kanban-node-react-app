@@ -3,7 +3,6 @@ import { getAllTasksByListId } from '../Requests/getAllTasksByListId';
 import { getAllTags } from '../Requests/getAllTags';
 import Task from './Task';
 import Modal from './Modal';
-import Spinner from './Spinner';
 
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
@@ -53,7 +52,7 @@ const List = ({ listId, listName, setRefreshList }) => {
         />
       </div>
       <div className="list-tasks">
-        {tasksData ? (
+        {tasksData &&
           tasksData
             .sort((a, b) => (a.id > b.id ? 1 : -1))
             .map((task) => (
@@ -71,10 +70,7 @@ const List = ({ listId, listName, setRefreshList }) => {
                 selectedTag={selectedTag}
                 setSelectedTag={setSelectedTag}
               />
-            ))
-        ) : (
-          <Spinner classNameSpinner=" block mr-auto ml-auto w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
-        )}
+            ))}
       </div>
     </div>
   );

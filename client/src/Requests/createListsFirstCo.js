@@ -2,12 +2,12 @@ import apiAxios from '.';
 
 export async function createListsFirstCo(name, userId) {
   try {
-    const response = await apiAxios.post('lists', {
+    await apiAxios.post('lists', {
       name,
       user_id: userId,
     });
 
-    return response;
+    return;
   } catch (err) {
     return;
   }

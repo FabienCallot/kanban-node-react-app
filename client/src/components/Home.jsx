@@ -8,15 +8,6 @@ import Spinner from './Spinner';
 const Home = ({ userId }) => {
   const [listsData, setListsData] = useState();
   const [refreshList, setRefreshList] = useState(false);
-  const [delayOut, setDelayOut] = useState(false);
-
-  const delay = () => {
-    !listsData &&
-      setTimeout(() => {
-        setDelayOut(true);
-      }, 3000);
-  };
-  delay();
 
   useEffect(() => {
     getAllLists(setListsData, userId);
@@ -28,10 +19,6 @@ const Home = ({ userId }) => {
       return;
     }
   }, [refreshList, userId]);
-
-  // firstCo && createListsFirstCo('Backlog', userId);
-  // firstCo && createListsFirstCo('In Progress', userId);
-  // firstCo && createListsFirstCo('Done', userId);
 
   return (
     <div className="home p-4 pt-20">
@@ -50,7 +37,7 @@ const Home = ({ userId }) => {
       </div>
 
       <div>
-        {listsData || delayOut ? (
+        {listsData ? (
           <div className="home-lists flex items-start flex-wrap justify-between">
             {listsData
               ? listsData
@@ -69,7 +56,12 @@ const Home = ({ userId }) => {
               : null}
           </div>
         ) : (
-          <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+          <>
+            <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
+            <p className="text-center">
+              First loading can take a few moment, be patient :){' '}
+            </p>
+          </>
         )}
       </div>
     </div>

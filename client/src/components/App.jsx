@@ -15,11 +15,8 @@ function App() {
   const [userData, SetUserData] = useState([]);
   const [firstCo, setFirstCo] = useState(false);
 
-  //console.log(firstCo);
-
   useEffect(() => {
     currentHeight(setHeight);
-    /* It checks if the user is already connected. */
     if (localStorage.getItem('user') !== null) {
       const responseLocalUser = JSON.parse(getLocalUser());
       if (responseLocalUser) {

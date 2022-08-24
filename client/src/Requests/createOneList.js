@@ -10,6 +10,6 @@ export async function createOneList(event, name, userId) {
 
     return response;
   } catch (err) {
-    return console.log(err.response);
+    return;
   }
 }

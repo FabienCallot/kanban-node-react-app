@@ -11,8 +11,7 @@ const errorController = {
     } else if (err instanceof ValidationError) {
       res.status(400).json({ error: err.message });
     } else {
-      console.error(err);
-      res.status(500).json({ error: `Internal server error` });
+      res.status(500);
     }
   },
 };
