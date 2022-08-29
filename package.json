@@ -13,7 +13,7 @@
     "sequelize": "^6.21.3"
   },
   "scripts": {
-    "start": "node-dev server/index.js",
+    "start": "node server/index.js",
     "build": "cd client && yarn && npx tailwindcss -o build.css --minify && yarn build"
   },
   "name": "kanban-node-react-app",
