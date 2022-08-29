@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import Home from './Home';
-import Header from './Header';
+import Navbar from './Navbar';
 import currentHeight from '../utils/currentHeight';
 import Button from './Button';
 import { getLocalUser } from '../Requests/index';
@@ -43,7 +43,7 @@ function App() {
     <div className="text-[#FFFFFF] font-advent">
       {!isConnected ? (
         <>
-          <Header
+          <Navbar
             clickEvent={() => {
               scrollToTop();
             }}
@@ -57,7 +57,7 @@ function App() {
         </>
       ) : (
         <>
-          <Header
+          <Navbar
             clickEvent={() => {
               scrollToTop();
             }}
