@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import List from './List';
-import { getAllLists } from '../Requests/getAllLists';
+import getAllLists from '../Requests/getAllLists';
 import Modal from './Modal';
 import Spinner from './Spinner';
 
@@ -10,7 +10,7 @@ const Home = ({ userId }) => {
   const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
-    getAllLists(setListsData, userId);
+    getAllLists(setListsData);
     if (refreshList) {
       getAllLists(setListsData);
       setRefreshList(false);
