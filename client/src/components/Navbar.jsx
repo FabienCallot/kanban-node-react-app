@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Modal from './Modal';
 
-const Header = ({ className, clickEvent }) => {
+const Navbar = ({ className, clickEvent }) => {
   return (
     <div
       className={`header flex justify-between fixed left-0 right-0 overflow-x-scroll bg-[#262626] p-4
@@ -22,4 +22,4 @@ const Header = ({ className, clickEvent }) => {
   );
 };
 
-export default Header;
+export default Navbar;

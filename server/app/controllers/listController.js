@@ -4,6 +4,9 @@ const listController = {
   async getAll(req, res, next) {
     try {
       const lists = await List.findAll({
+        where: {
+          user_id: req.user.user_id,
+        },
         include: {
           association: 'cards',
           include: 'tags',
