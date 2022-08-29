@@ -5,11 +5,12 @@ const cardRouter = require('./cardRouter');
 const tagRouter = require('./tagRouter');
 const auth = require('./auth');
 const errorController = require('../controllers/errorController');
+const midAuthToken = require('../middlewares/authToken');
 
 const router = express.Router();
 
 router.use('/auth', auth);
-router.use('/lists', listRouter);
+router.use('/lists', midAuthToken, listRouter);
 router.use('/cards', cardRouter);
 router.use('/tags', tagRouter);
 
