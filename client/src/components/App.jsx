@@ -14,6 +14,7 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [userData, SetUserData] = useState([]);
   const [firstCo, setFirstCo] = useState(false);
+  const userId = userData.id;
 
   useEffect(() => {
     currentHeight(setHeight);
@@ -28,10 +29,9 @@ function App() {
       }
     }
   }, []);
-  const userId = userData.id;
 
   const firstCoList = async () => {
-    await createListsFirstCo('Backlog', userId);
+    userData && (await createListsFirstCo('Backlog', userId));
     setTimeout(() => {
       setFirstCo(false);
     }, 5000);

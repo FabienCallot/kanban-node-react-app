@@ -60,8 +60,8 @@ const Auth = ({ handleSetIsConnected, handleSetUserData, handleFirstCo }) => {
       SetSuccesMessage(true);
       setTimeout(() => {
         handleSubmitLogIn(event);
+        setIsLoading(false);
       }, 1500);
-      setIsLoading(false);
     }
     SetSuccesMessage(false);
     handleFirstCo(true);

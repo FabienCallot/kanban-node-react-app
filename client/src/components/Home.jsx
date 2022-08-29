@@ -11,7 +11,6 @@ const Home = ({ userId }) => {
 
   useEffect(() => {
     getAllLists(setListsData, userId);
-    refreshList && getAllLists(setListsData);
     if (refreshList) {
       getAllLists(setListsData);
       setRefreshList(false);
