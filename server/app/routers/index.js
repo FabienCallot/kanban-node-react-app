@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.use('/auth', auth);
 router.use('/lists', midAuthToken, listRouter);
-router.use('/cards', cardRouter);
-router.use('/tags', tagRouter);
+router.use('/cards', midAuthToken, cardRouter);
+router.use('/tags', midAuthToken, tagRouter);
 
 // Server error
 router.use(errorController.error);
