@@ -28,7 +28,6 @@ export default function Modal({
   currentTaskName,
   currentTaskColor,
   currentListName,
-  handleSetIsdisConnected,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -76,7 +75,6 @@ export default function Modal({
     }
   };
 
-  //FIXME: pb with refresh list on delete list action.
   const handleUpdateListName = async (event, id, newListName) => {
     event.preventDefault();
     const response = updateOneList(
@@ -89,9 +87,17 @@ export default function Modal({
 
   const handleSubmitTask = async (event, id) => {
     const color = handleTagColor();
-    const response = await createOneTask(event, name, id, color);
-    response ? setShowModal(false) : console.log('error task re-render');
-    setRefreshTask(true);
+    if (!name) {
+      setEmpty(true);
+      return;
+    } else {
+      const response = await createOneTask(event, name, id, color);
+      response ? setShowModal(false) : console.log('error task re-render');
+      setRefreshTask(true);
+      setName('');
+      setSelectedTag(null);
+      return;
+    }
   };
   const handleUpdateTaskName = (event, id, newTaskName) => {
     event.preventDefault();
@@ -107,7 +113,6 @@ export default function Modal({
 
   const handleLogOut = () => {
     removeBearerToken();
-    //FIXME: use state isConnected
     window.location.reload(false);
     setShowModal(false);
   };
@@ -238,7 +243,11 @@ export default function Modal({
                   <button
                     className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setShowModal(false);
+                      setEmpty(false);
+                      modalId === 2 && setSelectedTag(null);
+                    }}
                   >
                     Abort
                   </button>
@@ -256,7 +265,6 @@ export default function Modal({
                         handleSubmitList(e, name);
                       } else if (modalId === 2) {
                         handleSubmitTask(e, listId, selectedTag);
-                        setSelectedTag(null);
                       } else if (modalId === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (modalId === 4) {
