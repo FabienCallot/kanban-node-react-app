@@ -35,6 +35,7 @@ export default function Modal({
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const handleName = (event) => {
     setName(event.target.value);
@@ -62,9 +63,17 @@ export default function Modal({
   };
 
   const handleSubmitList = async (event) => {
-    const response = await createOneList(event, name, userId);
-    response ? setShowModal(false) : alert('List already exist');
-    setRefreshList(true);
+    if (!name) {
+      setEmpty(true);
+      return;
+    } else {
+      setEmpty(false);
+      const response = await createOneList(event, name, userId);
+      response ? setShowModal(false) : alert('List already exist');
+      setRefreshList(true);
+      setName('');
+      return;
+    }
   };
 
   //FIXME: pb with refresh list on delete list action.
@@ -201,13 +210,18 @@ export default function Modal({
                 {modalId === 5 ? null : (
                   <form className="relative p-6 flex justify-between">
                     <label>
-                      Name
+                      Name :
                       <input
-                        className="ml-2 p-2 text-black font-semibold rounded"
+                        className={
+                          !empty
+                            ? 'ml-2 p-2 text-black font-semibold rounded border-[3px] '
+                            : 'ml-2 p-2 text-black font-semibold rounded border-[3px] border-red-500'
+                        }
                         id="new-item-name"
                         type="text"
                         name={'name'}
                         onChange={handleName}
+                        placeholder="Ex: Done"
                       />
                     </label>
                   </form>
