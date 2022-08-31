@@ -58,7 +58,7 @@ const Home = ({ userId }) => {
           <>
             <Spinner classNameSpinner=" block mr-auto ml-auto w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300" />
             <p className="text-center">
-              First loading can take a few moment, be patient :){' '}
+              The first load may take some time, so be patient :)
             </p>
           </>
         )}
