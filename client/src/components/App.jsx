@@ -19,10 +19,10 @@ function App() {
   useEffect(() => {
     currentHeight(setHeight);
     if (localStorage.getItem('user') !== null) {
-      const responseLocalUser = JSON.parse(getLocalUser());
-      if (responseLocalUser) {
+      const localUser = JSON.parse(getLocalUser());
+      if (localUser) {
         setIsConnected(true);
-        SetUserData(responseLocalUser);
+        SetUserData(localUser);
       } else {
         setIsConnected(false);
         SetUserData('');

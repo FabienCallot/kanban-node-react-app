@@ -28,13 +28,13 @@ export default function Modal({
   currentTaskName,
   currentTaskColor,
   currentListName,
-  handleSetIsdisConnected,
 }) {
   const [name, setName] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [deleteList, setDeleteList] = useState(false);
   const [deleteTask, setDeleteTask] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const handleName = (event) => {
     setName(event.target.value);
@@ -62,12 +62,19 @@ export default function Modal({
   };
 
   const handleSubmitList = async (event) => {
-    const response = await createOneList(event, name, userId);
-    response ? setShowModal(false) : alert('List already exist');
-    setRefreshList(true);
+    if (!name) {
+      setEmpty(true);
+      return;
+    } else {
+      setEmpty(false);
+      const response = await createOneList(event, name, userId);
+      response ? setShowModal(false) : alert('List already exist');
+      setRefreshList(true);
+      setName('');
+      return;
+    }
   };
 
-  //FIXME: pb with refresh list on delete list action.
   const handleUpdateListName = async (event, id, newListName) => {
     event.preventDefault();
     const response = updateOneList(
@@ -80,9 +87,17 @@ export default function Modal({
 
   const handleSubmitTask = async (event, id) => {
     const color = handleTagColor();
-    const response = await createOneTask(event, name, id, color);
-    response ? setShowModal(false) : console.log('error task re-render');
-    setRefreshTask(true);
+    if (!name) {
+      setEmpty(true);
+      return;
+    } else {
+      const response = await createOneTask(event, name, id, color);
+      response ? setShowModal(false) : console.log('error task re-render');
+      setRefreshTask(true);
+      setName('');
+      setSelectedTag(null);
+      return;
+    }
   };
   const handleUpdateTaskName = (event, id, newTaskName) => {
     event.preventDefault();
@@ -98,7 +113,6 @@ export default function Modal({
 
   const handleLogOut = () => {
     removeBearerToken();
-    //FIXME: use state isConnected
     window.location.reload(false);
     setShowModal(false);
   };
@@ -201,13 +215,18 @@ export default function Modal({
                 {modalId === 5 ? null : (
                   <form className="relative p-6 flex justify-between">
                     <label>
-                      Name
+                      Name :
                       <input
-                        className="ml-2 p-2 text-black font-semibold rounded"
+                        className={
+                          !empty
+                            ? 'ml-2 p-2 text-black font-semibold rounded border-[3px] '
+                            : 'ml-2 p-2 text-black font-semibold rounded border-[3px] border-red-500'
+                        }
                         id="new-item-name"
                         type="text"
                         name={'name'}
                         onChange={handleName}
+                        placeholder="Ex: Done"
                       />
                     </label>
                   </form>
@@ -224,7 +243,11 @@ export default function Modal({
                   <button
                     className="close text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setShowModal(false);
+                      setEmpty(false);
+                      modalId === 2 && setSelectedTag(null);
+                    }}
                   >
                     Abort
                   </button>
@@ -242,7 +265,6 @@ export default function Modal({
                         handleSubmitList(e, name);
                       } else if (modalId === 2) {
                         handleSubmitTask(e, listId, selectedTag);
-                        setSelectedTag(null);
                       } else if (modalId === 3) {
                         handleUpdateListName(e, listId, name);
                       } else if (modalId === 4) {
