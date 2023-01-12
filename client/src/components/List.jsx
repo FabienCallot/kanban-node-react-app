@@ -1,8 +1,9 @@
-import { React, useState, useEffect } from 'react';
-import { getAllTasksByListId } from '../Requests/getAllTasksByListId';
-import { getAllTags } from '../Requests/getAllTags';
-import Task from './Task';
-import Modal from './Modal';
+import { React, useState, useEffect } from "react";
+import { getAllTasksByListId } from "../Requests/getAllTasksByListId";
+import { getAllTags } from "../Requests/getAllTags";
+import Task from "./Task";
+import Modal from "./Modal";
+import { Droppable } from "react-beautiful-dnd";
 
 const List = ({ listId, listName, setRefreshList }) => {
   const [tasksData, setTasksData] = useState(null);
@@ -22,6 +23,7 @@ const List = ({ listId, listName, setRefreshList }) => {
   }, [listId, refreshTask, setRefreshList]);
   return (
     <div
+      onDrag={console.log("yeees")}
       className={`${listId} bg-[#262626] sm:w-[300px] sm:max-w-[300px] w-[80%] max-w-[250px] mx-auto my-4 p-4 rounded-lg h-auto`}
     >
       <div className="list-header flex justify-between items-center">
@@ -32,7 +34,7 @@ const List = ({ listId, listName, setRefreshList }) => {
         <Modal
           modalId={3}
           classNameButton={`${listId} edit-button`}
-          title={'Edit list'}
+          title={"Edit list"}
           currentListName={listName}
           listId={listId}
           setRefreshList={setRefreshList}
@@ -43,7 +45,7 @@ const List = ({ listId, listName, setRefreshList }) => {
         <Modal
           modalId={2}
           classNameButton=" mt-0 mb-0 ml-0 border rounded w-8 h-8 lg:hover:bg-[#373737] lg:hover:border-none lg:hover:scale-125 lg:hover:rotate-90 lg:transition lg:duration-500 lg:hover:duration-1500"
-          title={'Create new task'}
+          title={"Create new task"}
           listId={listId}
           setRefreshTask={setRefreshTask}
           tagsData={tagsData}
@@ -51,27 +53,36 @@ const List = ({ listId, listName, setRefreshList }) => {
           setSelectedTag={setSelectedTag}
         />
       </div>
-      <div className="list-tasks">
-        {tasksData &&
-          tasksData
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map((task) => (
-              <Task
-                //for task
-                key={task.id}
-                name={task.description}
-                taskId={task.id}
-                bgColor={task.color}
-                //modal in task
-                listId={listId}
-                titleModal={'Edit list'}
-                setRefreshTask={setRefreshTask}
-                tagsData={tagsData}
-                selectedTag={selectedTag}
-                setSelectedTag={setSelectedTag}
-              />
-            ))}
-      </div>
+      <Droppable droppableId={listId}>
+        {(provider) => (
+          <div
+            {...provider.droppableProps}
+            ref={provider.innerRef}
+            className="list-tasks"
+          >
+            {tasksData &&
+              tasksData
+                .sort((a, b) => (a.id > b.id ? 1 : -1))
+                .map((task, index) => (
+                  <Task
+                    //for task
+                    index={index}
+                    key={task.id}
+                    name={task.description}
+                    taskId={task.id}
+                    bgColor={task.color}
+                    //modal in task
+                    listId={listId}
+                    titleModal={"Edit list"}
+                    setRefreshTask={setRefreshTask}
+                    tagsData={tagsData}
+                    selectedTag={selectedTag}
+                    setSelectedTag={setSelectedTag}
+                  />
+                ))}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };
