@@ -11,7 +11,7 @@ const { Sequelize } = require('sequelize');
 //     },
 //     password:
 // });
-const sequelize = new Sequelize(process.env.DATABASE_URI);
+const sequelize = new Sequelize(process.env.DATABASE_URI, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD);
 console.log(sequelize);
 const test = async () => {
   try {
