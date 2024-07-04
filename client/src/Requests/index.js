@@ -1,6 +1,6 @@
 import axios from 'axios';
 const apiAxios = axios.create({
-  baseURL: 'kanban-node-react-app-production.up.railway.app/',
+  baseURL: 'http://localhost:3018/',
 });
 
 export default apiAxios;

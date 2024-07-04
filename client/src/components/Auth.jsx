@@ -70,8 +70,8 @@ const Auth = ({ handleSetIsConnected, handleSetUserData, handleFirstCo }) => {
   const handleSubmitLogIn = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    console.log(emailValue, passwordValue);
     const response = await loginRequest(event, emailValue, passwordValue);
-
     if (response.status !== 200) {
       SetEmailValue('');
       SetPasswordValue('');
