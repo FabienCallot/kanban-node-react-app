@@ -1,6 +1,6 @@
 import axios from 'axios';
 const apiAxios = axios.create({
-  baseURL: 'http://localhost:3018/',
+  baseURL: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`,
 });
 
 export default apiAxios;
